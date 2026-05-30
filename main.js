@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuBtn = document.getElementById('mobile-menu-btn');
     
     // Prüfen, ob wir auf der Startseite sind
-    const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('index.php') || window.location.pathname === '';
+    const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html') || window.location.pathname === '';
     
     function updateHeaderStyle() {
         if (!header) return;
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const oldAlerts = form.querySelectorAll('.ajax-alert');
             oldAlerts.forEach(a => a.remove());
 
-            fetch('/kontakt.php', {
+            fetch('/kontakt.html', {
                 method: 'POST',
                 body: formData
             })
@@ -676,12 +676,12 @@ window.scrollToKontaktFromModal = function(overlayId, contentId) {
             document.body.style.overflow = '';
             const kontaktEl = document.getElementById('kontakt');
             if(kontaktEl) kontaktEl.scrollIntoView({ behavior: 'smooth' });
-            else window.location.href = '/kontakt.php';
+            else window.location.href = '/kontakt.html';
         }, 300);
     } else {
         const kontaktEl = document.getElementById('kontakt');
         if(kontaktEl) kontaktEl.scrollIntoView({ behavior: 'smooth' });
-        else window.location.href = '/kontakt.php';
+        else window.location.href = '/kontakt.html';
     }
 };
 
