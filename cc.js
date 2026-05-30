@@ -1,0 +1,1 @@
+if(console){var cookiedomainwarning='Error: The domain WWW.HOMEPLUS.DE is not authorized to show the cookie banner for domain group ID 57b65a26-f5d7-4153-a1ee-2be273be68e0. Please add it to the domain group in the Cookiebot Manager to authorize the domain.';if(typeof console.warn === 'function'){console.warn(cookiedomainwarning)}else{console.log(cookiedomainwarning)}};

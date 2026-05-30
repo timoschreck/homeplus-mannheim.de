@@ -1,0 +1,184 @@
+/* ==========================================================================
+   HomePlus GmbH - Zentrales Stylesheet
+   Beinhaltet alle Custom-Styles, die nicht über Tailwind-Klassen gelöst sind.
+   ========================================================================== */
+
+/* ==========================================================================
+   Lokale Schriftarten (DSGVO konform)
+   ========================================================================== */
+
+/* Montserrat */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('../fonts/montserrat-v31-latin-300.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/montserrat-v31-latin-regular.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/montserrat-v31-latin-500.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/montserrat-v31-latin-600.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/montserrat-v31-latin-700.woff2') format('woff2');
+}
+
+/* Outfit */
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/outfit-v15-latin-regular.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/outfit-v15-latin-700.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('../fonts/outfit-v15-latin-800.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url('../fonts/outfit-v15-latin-900.woff2') format('woff2');
+}
+
+/* Basis-Styling und iOS Fixes */
+body { 
+    font-family: 'Montserrat', sans-serif; 
+}
+html, body { 
+    background-color: #F4F7FB !important; 
+}
+
+/* Navigation - Glassmorphismus und Crossfade-Effekte */
+.glass-nav {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Scroll-Progress-Bar: GPU-Hint ohne Transform-Konflikt */
+#scroll-progress {
+    will-change: width;
+}
+.glass-nav .glass-nav-logo-white { 
+    opacity: 0 !important; 
+    visibility: hidden; 
+}
+.glass-nav .glass-nav-logo-color { 
+    opacity: 1 !important; 
+    visibility: visible; 
+}
+
+/* NEU: Mobile Menu Button Farbwechsel für weißen Header (Kugelsicher) */
+.glass-nav #mobile-menu-btn {
+    color: #321EE6 !important; /* text-brand-blue */
+    background-color: rgba(50, 30, 230, 0.05) !important; /* bg-brand-blue/5 */
+}
+
+/* Hero & Hintergründe */
+.hero-gradient { 
+    background: linear-gradient(to right, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(50, 30, 230, 0.05) 100%); 
+}
+
+/* Animationen & Reveal-Effekte */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Nach der Animation will-change freigeben (spart GPU-Speicher) */
+.reveal.active {
+    will-change: auto;
+}
+.fade-in {
+    animation: fadeIn 0.4s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Partner-Marquee: GPU-Hint für ruckelfreie Animation */
+.animate-marquee {
+    will-change: transform;
+}
+
+/* Scrollbars verbergen (Allgemein) */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Spezifische Scrollbar für horizontal scrollbare Slider (z.B. Team / Produkte Mobile) */
+.team-slider::-webkit-scrollbar { 
+    height: 8px; 
+}
+.team-slider::-webkit-scrollbar-track { 
+    background: #F4F7FB; 
+    border-radius: 10px; 
+    margin: 0 20px; 
+}
+.team-slider::-webkit-scrollbar-thumb { 
+    background: #A0E628; 
+    border-radius: 10px; 
+}
+.team-slider::-webkit-scrollbar-thumb:hover { 
+    background: #8BCB20; 
+}
+
+/* Google Maps Autocomplete Styling-Fix (Ausblenden von Fehlersymbolen & Design) */
+input#strasse_hausnummer, .pac-target-input { background-image: none !important; }
+.pac-container { border-radius: 1rem; border: 1px solid #f3f4f6; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); font-family: 'Montserrat', sans-serif; margin-top: 5px; padding: 8px; }
+.pac-item { padding: 10px 15px; cursor: pointer; border-top: none; border-bottom: 1px solid #f9fafb; border-radius: 0.5rem; transition: background-color 0.2s; }
+.pac-item:last-child { border-bottom: none; }
+.pac-item:hover { background-color: #f3f4f6; }
+.pac-item-query { font-weight: 700; color: #1E12A8; font-size: 14px; }
+.pac-matched { color: #A0E628; }
+.pac-logo::after { display: none; }
+
+/* --- KOMPONENTEN FIXES --- */
+
+/* Team Karten Fix: Verhindert abgeschnittene Zitate auf Zwischengrößen */
+.team-card {
+    height: auto !important; 
+    min-height: 480px;       
+    padding-bottom: 2.5rem !important; 
+}
