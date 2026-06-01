@@ -1,4 +1,6 @@
 (function () {
+    const siteBase = window.location.origin + (window.location.pathname.includes('/homeplus-mannheim.de/') ? '/homeplus-mannheim.de/' : '/');
+    const currentFile = window.location.pathname.split('/').pop() || 'index.html';
     const legacyHosts = ['homeplus-rn.de', 'www.homeplus-rn.de'];
     const pageMap = {
         '/': 'index.html',
@@ -13,7 +15,49 @@
         '/datenschutz.html': 'datenschutz.html',
         '/agb.html': 'agb.html',
         '/cookie-richtlinie.html': 'cookie-richtlinie.html',
-        '/barrierefreiheit.html': 'barrierefreiheit.html'
+        '/barrierefreiheit.html': 'barrierefreiheit.html',
+        '/mannheim-heidelberg.html': 'mannheim-heidelberg.html'
+    };
+
+    const cityNames = [
+        'Mannheim', 'Heidelberg', 'Ludwigshafen', 'Viernheim', 'Weinheim',
+        'Schwetzingen', 'Ladenburg', 'Schriesheim', 'Leimen', 'Heddesheim',
+        'Ilvesheim', 'Edingen-Neckarhausen', 'Bruehl', 'Plankstadt', 'Hockenheim',
+        'Oftersheim', 'Frankenthal', 'Speyer'
+    ];
+
+    const defaultDescription = 'Photovoltaik, Waermepumpen, Stromspeicher und Wallboxen in Mannheim, Heidelberg und 25 km Umkreis. HomePlus plant und montiert alles aus einer Hand.';
+    const seoByPage = {
+        'index.html': {
+            title: 'Photovoltaik & Waermepumpe Mannheim Heidelberg | HomePlus',
+            description: defaultDescription,
+            keywords: 'Photovoltaik Mannheim, Photovoltaik Heidelberg, Waermepumpe Mannheim, Waermepumpe Heidelberg, Solaranlage Mannheim, Solaranlage Heidelberg, Stromspeicher Rhein-Neckar, Wallbox Mannheim, Energieberatung Heidelberg, HomePlus Mannheim'
+        },
+        'photovoltaik.html': {
+            title: 'Photovoltaik Mannheim & Heidelberg | Solaranlage installieren',
+            description: 'Solaranlage in Mannheim, Heidelberg und 25 km Umkreis planen und installieren lassen. HomePlus liefert Photovoltaik, Speicher und Wallbox aus einer Hand.',
+            keywords: 'Photovoltaik Mannheim, Solaranlage Mannheim, Photovoltaik Heidelberg, Solaranlage Heidelberg, PV Anlage Rhein-Neckar, Stromspeicher Mannheim, Wallbox Heidelberg'
+        },
+        'waermepumpen.html': {
+            title: 'Waermepumpe Mannheim & Heidelberg | Foerderung & Installation',
+            description: 'Waermepumpe in Mannheim, Heidelberg und Rhein-Neckar installieren lassen. HomePlus prueft Foerderung, plant die Anlage und montiert mit Fachteam.',
+            keywords: 'Waermepumpe Mannheim, Waermepumpe Heidelberg, Viessmann Waermepumpe Rhein-Neckar, Heizungsmodernisierung Mannheim, Waermepumpe Foerderung Heidelberg'
+        },
+        'leistungen.html': {
+            title: 'Energieloesungen Mannheim Heidelberg | PV, Waermepumpe, Elektro',
+            description: 'Alle Energieloesungen fuer Mannheim, Heidelberg und Umgebung: Photovoltaik, Stromspeicher, Wallbox, Waermepumpe und Elektroinstallation aus einer Hand.',
+            keywords: 'Energieloesungen Mannheim, Elektroinstallation Heidelberg, Photovoltaik Rhein-Neckar, Waermepumpe Rhein-Neckar, Wallbox Mannheim'
+        },
+        'kontakt.html': {
+            title: 'Angebot Photovoltaik & Waermepumpe Mannheim Heidelberg',
+            description: 'Kostenloses Angebot fuer Photovoltaik, Waermepumpe, Speicher oder Wallbox in Mannheim, Heidelberg und 25 km Umkreis anfordern. HomePlus meldet sich persoenlich.',
+            keywords: 'Photovoltaik Angebot Mannheim, Waermepumpe Angebot Heidelberg, Solaranlage Beratung Mannheim, HomePlus Kontakt Rhein-Neckar'
+        },
+        'mannheim-heidelberg.html': {
+            title: 'Photovoltaik & Waermepumpe Mannheim Heidelberg 25 km Umkreis',
+            description: 'Regionale Fachberatung fuer Photovoltaik, Waermepumpen, Speicher und Wallboxen in Mannheim, Heidelberg, Ludwigshafen, Viernheim und 25 km Umkreis.',
+            keywords: 'Photovoltaik Mannheim Heidelberg, Waermepumpe Mannheim Heidelberg, Solaranlage 25 km Mannheim, HomePlus Rhein-Neckar, Energieberatung Mannheim Heidelberg'
+        }
     };
 
     function mapLegacyUrl(value) {
@@ -33,6 +77,128 @@
             const next = mapLegacyUrl(current);
             if (next !== current) link.setAttribute('href', next);
         });
+    }
+
+    function getAbsolutePageUrl(fileName) {
+        return siteBase + (fileName === 'index.html' ? '' : fileName);
+    }
+
+    function setMeta(selector, attrs) {
+        let el = document.head.querySelector(selector);
+        if (!el) {
+            el = document.createElement('meta');
+            if (attrs.name) el.setAttribute('name', attrs.name);
+            if (attrs.property) el.setAttribute('property', attrs.property);
+            document.head.appendChild(el);
+        }
+        Object.keys(attrs).forEach(key => el.setAttribute(key, attrs[key]));
+    }
+
+    function setLink(rel, href) {
+        let el = document.head.querySelector(`link[rel="${rel}"]`);
+        if (!el) {
+            el = document.createElement('link');
+            el.setAttribute('rel', rel);
+            document.head.appendChild(el);
+        }
+        el.setAttribute('href', href);
+    }
+
+    function setSeoMetadata() {
+        const seo = seoByPage[currentFile] || {
+            title: document.title ? document.title.replace('HomePlus Rhein-Neckar', 'HomePlus Mannheim Heidelberg') : 'HomePlus Mannheim Heidelberg',
+            description: defaultDescription,
+            keywords: 'Photovoltaik Mannheim, Waermepumpe Heidelberg, Energieloesungen Rhein-Neckar, HomePlus'
+        };
+        const pageUrl = getAbsolutePageUrl(currentFile);
+        const imageUrl = siteBase + 'Design_ohne_Titel-2.webp';
+
+        document.title = seo.title;
+        setLink('canonical', pageUrl);
+        setLink('manifest', siteBase + 'site.webmanifest');
+        setMeta('meta[name="description"]', { name: 'description', content: seo.description });
+        setMeta('meta[name="keywords"]', { name: 'keywords', content: seo.keywords });
+        setMeta('meta[name="coverage"]', { name: 'coverage', content: 'Mannheim, Heidelberg, Rhein-Neckar, 25 km Umkreis' });
+        setMeta('meta[name="geo.region"]', { name: 'geo.region', content: 'DE-BW' });
+        setMeta('meta[name="geo.placename"]', { name: 'geo.placename', content: 'Mannheim, Heidelberg' });
+        setMeta('meta[name="geo.position"]', { name: 'geo.position', content: '49.48745;8.46604' });
+        setMeta('meta[name="ICBM"]', { name: 'ICBM', content: '49.48745, 8.46604' });
+        setMeta('meta[property="og:title"]', { property: 'og:title', content: seo.title });
+        setMeta('meta[property="og:description"]', { property: 'og:description', content: seo.description });
+        setMeta('meta[property="og:url"]', { property: 'og:url', content: pageUrl });
+        setMeta('meta[property="og:image"]', { property: 'og:image', content: imageUrl });
+        setMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'HomePlus Mannheim Heidelberg' });
+        setMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: seo.title });
+        setMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: seo.description });
+        setMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: imageUrl });
+    }
+
+    function installLocalBusinessSchema() {
+        const existing = document.head.querySelector('script[data-homeplus-local-seo]');
+        if (existing) existing.remove();
+        const schema = {
+            '@context': 'https://schema.org',
+            '@type': ['LocalBusiness', 'HomeAndConstructionBusiness', 'Electrician'],
+            '@id': siteBase + '#local-seo-business',
+            name: 'HomePlus Mannheim Heidelberg',
+            legalName: 'HomePlus GmbH',
+            url: siteBase,
+            image: siteBase + 'Design_ohne_Titel-2.webp',
+            logo: siteBase + 'HomePlus_Logo_horizontal_weiss-gruen-kein-rand.webp',
+            telephone: '+49 15565 415254',
+            priceRange: '€€',
+            description: defaultDescription,
+            address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Mannheim',
+                addressRegion: 'Baden-Wuerttemberg',
+                addressCountry: 'DE'
+            },
+            geo: {
+                '@type': 'GeoCoordinates',
+                latitude: 49.48745,
+                longitude: 8.46604
+            },
+            areaServed: cityNames.map(name => ({ '@type': 'City', name: name })),
+            serviceArea: {
+                '@type': 'GeoCircle',
+                geoMidpoint: {
+                    '@type': 'GeoCoordinates',
+                    latitude: 49.48745,
+                    longitude: 8.46604
+                },
+                geoRadius: 25000
+            },
+            knowsAbout: [
+                'Photovoltaik', 'Solaranlagen', 'Waermepumpen', 'Stromspeicher',
+                'Wallboxen', 'Elektroinstallation', 'Energieberatung', 'Foerdermittel'
+            ],
+            hasOfferCatalog: {
+                '@type': 'OfferCatalog',
+                name: 'Energieloesungen Mannheim Heidelberg',
+                itemListElement: [
+                    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Photovoltaik Installation Mannheim Heidelberg' } },
+                    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Waermepumpe Installation Mannheim Heidelberg' } },
+                    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Stromspeicher und Wallbox Rhein-Neckar' } },
+                    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Elektroinstallation im 25 km Umkreis Mannheim' } }
+                ]
+            }
+        };
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.dataset.homeplusLocalSeo = 'true';
+        script.textContent = JSON.stringify(schema);
+        document.head.appendChild(script);
+    }
+
+    function ensureLocalSeoLink() {
+        if (document.querySelector('a[href="mannheim-heidelberg.html"], a[href="./mannheim-heidelberg.html"]')) return;
+        const footer = document.querySelector('footer');
+        if (!footer) return;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'px-6 pb-6 text-center text-xs font-semibold uppercase tracking-wide text-brand-blue';
+        wrapper.innerHTML = '<a href="./mannheim-heidelberg.html" class="hover:text-brand-primary transition-colors">Photovoltaik & Waermepumpe Mannheim-Heidelberg</a>';
+        footer.appendChild(wrapper);
     }
 
     function installStaticContactFallback() {
@@ -59,10 +225,17 @@
         };
     }
 
+    setSeoMetadata();
+    installLocalBusinessSchema();
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', normalizeLegacyLinks);
+        document.addEventListener('DOMContentLoaded', () => {
+            normalizeLegacyLinks();
+            ensureLocalSeoLink();
+        });
     } else {
         normalizeLegacyLinks();
+        ensureLocalSeoLink();
     }
     window.addEventListener('load', installStaticContactFallback);
 

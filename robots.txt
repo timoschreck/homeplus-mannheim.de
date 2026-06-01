@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://timoschreck.github.io/homeplus-mannheim.de/sitemap.xml
