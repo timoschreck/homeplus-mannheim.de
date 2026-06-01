@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kostenloses Angebot anfordern | HomePlus Rhein-Neckar</title>
-    <meta name="description" content="Fordern Sie ein unverbindliches Angebot fuer Photovoltaik, Waermepumpe, Wallbox oder Elektroarbeiten in Mannheim und Rhein-Neckar an.">
+    <meta name="description" content="Fordern Sie ein unverbindliches Angebot für Photovoltaik, Wärmepumpe, Wallbox oder Elektroarbeiten in Mannheim und Rhein-Neckar an.">
     <link rel="icon" type="image/png" href="./fav_icon.webp">
     <link rel="apple-touch-icon" href="./fav_icon.webp">
     <link rel="stylesheet" href="./tailwind.css">
@@ -12,464 +12,70 @@
     <link rel="manifest" href="https://www.homeplus-rn.de/site.webmanifest">
     <script src="./lucide@latest" defer data-cookieconsent="ignore"></script>
     <style>
-        .angebot-hero {
-            background: radial-gradient(circle at 85% 15%, rgba(160, 230, 40, 0.20), transparent 34%), linear-gradient(135deg, #f4f7fb 0%, #ffffff 54%, #f4f7fb 100%);
-        }
-        .angebot-shell {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 4rem 1rem 5rem;
-        }
-        .angebot-kicker {
-            display: inline-flex;
-            align-items: center;
-            gap: .55rem;
-            padding: .65rem 1rem;
-            border-radius: 999px;
-            background: #fff;
-            color: #321EE6;
-            border: 1px solid rgba(50, 30, 230, .10);
-            font-size: .78rem;
-            font-weight: 800;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            box-shadow: 0 14px 35px rgba(19, 23, 38, .06);
-        }
-        .angebot-dot {
-            width: .55rem;
-            height: .55rem;
-            background: #A0E628;
-            display: inline-block;
-        }
-        .angebot-title {
-            margin-top: 1.6rem;
-            max-width: 850px;
-            color: #321EE6;
-            font-family: Outfit, Montserrat, sans-serif;
-            font-weight: 900;
-            font-size: clamp(2.4rem, 7vw, 5.4rem);
-            line-height: .98;
-            text-transform: uppercase;
-        }
-        .angebot-lead {
-            max-width: 720px;
-            margin-top: 1.4rem;
-            color: #374151;
-            font-size: clamp(1.05rem, 2vw, 1.25rem);
-            line-height: 1.7;
-        }
-        .angebot-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
-            gap: 2rem;
-            align-items: start;
-            margin-top: 3rem;
-        }
-        .angebot-panel {
-            background: #fff;
-            border: 1px solid rgba(229, 231, 235, .95);
-            box-shadow: 0 24px 70px rgba(19, 23, 38, .10);
-            border-radius: 2rem;
-            padding: clamp(1.35rem, 3vw, 2rem);
-        }
-        .angebot-panel.form-panel {
-            border-radius: 2.4rem;
-            padding: clamp(1.45rem, 3vw, 2.75rem);
-            position: relative;
-        }
-        .angebot-badge {
-            position: absolute;
-            top: -1.2rem;
-            right: 1.4rem;
-            width: 6rem;
-            height: 6rem;
-            border-radius: 999px;
-            background: #321EE6;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            transform: rotate(10deg);
-            box-shadow: 0 18px 35px rgba(50, 30, 230, .25);
-            font-family: Outfit, Montserrat, sans-serif;
-            font-weight: 900;
-            line-height: 1.05;
-            pointer-events: none;
-        }
-        .angebot-badge small {
-            font-size: .58rem;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-        }
-        .angebot-badge span {
-            font-size: 1.15rem;
-        }
-        .choice-row {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: .8rem;
-            margin-top: 1rem;
-        }
-        .chip-button,
-        .tab-button,
-        .interest-option {
-            border: 2px solid #edf0f5;
-            background: #fff;
-            color: #321EE6;
-            font-weight: 800;
-            transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
-        }
-        .chip-button {
-            min-height: 4.6rem;
-            border-radius: 1.2rem;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: .7rem;
-            text-transform: uppercase;
-            font-size: .8rem;
-            letter-spacing: .04em;
-        }
-        .chip-button:hover,
-        .tab-button:hover,
-        .interest-option:hover {
-            transform: translateY(-1px);
-            border-color: rgba(160, 230, 40, .8);
-            box-shadow: 0 14px 25px rgba(19, 23, 38, .07);
-        }
-        .chip-button.is-active,
-        .tab-button.is-active,
-        .interest-option input:checked + span {
-            border-color: #A0E628;
-            background: rgba(160, 230, 40, .12);
-        }
-        .tabs {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: .5rem;
-            padding: .45rem;
-            background: #f4f7fb;
-            border: 1px solid #eef0f4;
-            border-radius: 999px;
-            margin: 1.4rem 0 1.6rem;
-        }
-        .tab-button {
-            border-width: 0;
-            border-radius: 999px;
-            min-height: 2.6rem;
-            font-size: .76rem;
-            letter-spacing: .05em;
-            text-transform: uppercase;
-        }
-        .tab-button.is-active {
-            background: #fff;
-            box-shadow: 0 10px 22px rgba(19, 23, 38, .08);
-        }
-        .calc-pane[hidden] {
-            display: none;
-        }
-        .calc-label {
-            color: #321EE6;
-            font-family: Outfit, Montserrat, sans-serif;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            font-size: .86rem;
-        }
-        .calc-subcopy {
-            color: #667085;
-            margin-top: .35rem;
-            font-size: .9rem;
-        }
-        .calc-value-row {
-            margin-top: 1.7rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-            gap: 1rem;
-        }
-        .calc-value {
-            color: #321EE6;
-            font-family: Outfit, Montserrat, sans-serif;
-            font-size: clamp(2.2rem, 5vw, 3.2rem);
-            line-height: 1;
-            font-weight: 900;
-        }
-        .calc-unit {
-            color: #98a2b3;
-            font-size: .72rem;
-            font-weight: 900;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            margin-bottom: .3rem;
-        }
-        .range-track {
-            position: relative;
-            height: .72rem;
-            margin-top: 1.4rem;
-            background: #ecf0f6;
-            border-radius: 999px;
-        }
-        .range-fill {
-            position: absolute;
-            inset: 0 auto 0 0;
-            width: 0;
-            border-radius: inherit;
-            background: #A0E628;
-            box-shadow: 0 0 18px rgba(160, 230, 40, .55);
-        }
-        .range-fill.waerme {
-            background: #321EE6;
-            box-shadow: 0 0 18px rgba(50, 30, 230, .32);
-        }
-        .range-thumb {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 1.75rem;
-            height: 1.75rem;
-            transform: translate(-50%, -50%);
-            border-radius: 999px;
-            background: #fff;
-            border: 5px solid #A0E628;
-            box-shadow: 0 8px 18px rgba(19, 23, 38, .16);
-            pointer-events: none;
-        }
-        .range-thumb.waerme {
-            border-color: #321EE6;
-        }
-        .range-track input[type="range"] {
-            position: absolute;
-            inset: -.55rem 0;
-            width: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-        .range-scale {
-            display: flex;
-            justify-content: space-between;
-            margin-top: .85rem;
-            color: #98a2b3;
-            font-size: .72rem;
-            font-weight: 800;
-        }
-        .savings-box {
-            margin-top: 1.8rem;
-            padding: 1.45rem;
-            border-radius: 1.35rem;
-            background: #f4f7fb;
-            text-align: center;
-            border: 1px solid #edf0f5;
-        }
-        .savings-label {
-            color: #667085;
-            font-size: .72rem;
-            font-weight: 900;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-        }
-        .savings-value {
-            margin-top: .45rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: .45rem;
-            color: #00B67A;
-            font-family: Outfit, Montserrat, sans-serif;
-            font-weight: 900;
-            font-size: clamp(2.2rem, 5vw, 3.4rem);
-            line-height: 1;
-        }
-        .savings-note {
-            margin-top: .75rem;
-            color: #98a2b3;
-            font-size: .72rem;
-            line-height: 1.45;
-        }
-        .co2-pill {
-            margin-top: .9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: .35rem;
-            border-radius: 999px;
-            padding: .45rem .8rem;
-            color: #00B67A;
-            background: rgba(0, 182, 122, .11);
-            font-weight: 900;
-            font-size: .74rem;
-            text-transform: uppercase;
-            letter-spacing: .04em;
-        }
-        .trust-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .75rem 1.15rem;
-            margin-top: 1.2rem;
-            color: #321EE6;
-            font-size: .78rem;
-            font-weight: 900;
-            letter-spacing: .04em;
-            text-transform: uppercase;
-        }
-        .trust-row span {
-            display: inline-flex;
-            align-items: center;
-            gap: .45rem;
-        }
-        .form-title {
-            color: #321EE6;
-            font-family: Outfit, Montserrat, sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.7rem);
-            font-weight: 900;
-            line-height: 1.05;
-            margin-bottom: .6rem;
-        }
-        .form-copy {
-            color: #667085;
-            max-width: 640px;
-            line-height: 1.65;
-            margin-bottom: 1.7rem;
-        }
-        .form-section-label {
-            color: #321EE6;
-            display: block;
-            font-size: .72rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: .08em;
-            margin: 1.2rem 0 .8rem;
-        }
-        .interest-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: .75rem;
-        }
-        .interest-option input {
-            position: absolute;
-            opacity: 0;
-            pointer-events: none;
-        }
-        .interest-option span {
-            min-height: 5.1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: .55rem;
-            border: 2px solid #edf0f5;
-            border-radius: 1rem;
-            color: #321EE6;
-            font-weight: 900;
-            font-size: .72rem;
-            letter-spacing: .05em;
-            text-transform: uppercase;
-        }
-        .field-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1rem;
-        }
-        .field {
-            display: flex;
-            flex-direction: column;
-            gap: .45rem;
-        }
-        .field.full {
-            grid-column: 1 / -1;
-        }
-        .field label {
-            color: #667085;
-            font-size: .68rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: .08em;
-            padding-left: .1rem;
-        }
-        .field input,
-        .field textarea {
-            width: 100%;
-            border-radius: .9rem;
-            border: 1px solid transparent;
-            background: #f4f7fb;
-            color: #321EE6;
-            padding: 1rem 1.1rem;
-            outline: none;
-            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
-        }
-        .field textarea {
-            min-height: 7.5rem;
-            resize: vertical;
-        }
-        .field input:focus,
-        .field textarea:focus {
-            background: #fff;
-            border-color: #A0E628;
-            box-shadow: 0 0 0 3px rgba(160, 230, 40, .22);
-        }
-        .consent {
-            display: flex;
-            gap: .65rem;
-            align-items: flex-start;
-            color: #667085;
-            font-size: .82rem;
-            line-height: 1.45;
-        }
-        .consent input {
-            margin-top: .2rem;
-        }
-        .submit-button {
-            width: 100%;
-            min-height: 3.8rem;
-            border-radius: 999px;
-            background: #FA9600;
-            color: #fff;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            box-shadow: 0 18px 35px rgba(250, 150, 0, .28);
-            transition: transform .2s ease, opacity .2s ease;
-        }
-        .submit-button:hover {
-            transform: translateY(-1px);
-            opacity: .93;
-        }
-        .kontakt-mini {
-            margin-top: 1.2rem;
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: .75rem;
-        }
-        .kontakt-mini a,
-        .kontakt-mini span {
-            border-radius: 1rem;
-            background: #fff;
-            border: 1px solid #edf0f5;
-            padding: .9rem;
-            color: #321EE6;
-            font-size: .78rem;
-            font-weight: 800;
-            text-align: center;
-        }
-        @media (max-width: 1023px) {
-            .angebot-grid { grid-template-columns: 1fr; }
-            .angebot-badge { display: none; }
-        }
-        @media (max-width: 760px) {
-            .angebot-shell { padding-top: 2.5rem; }
-            .choice-row,
-            .field-grid,
-            .kontakt-mini { grid-template-columns: 1fr; }
-            .interest-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .angebot-panel { border-radius: 1.4rem; }
-            .angebot-panel.form-panel { border-radius: 1.5rem; }
-        }
+        .angebot-hero { background: radial-gradient(circle at 85% 15%, rgba(160, 230, 40, 0.20), transparent 34%), linear-gradient(135deg, #f4f7fb 0%, #ffffff 54%, #f4f7fb 100%); }
+        .angebot-shell { max-width: 1280px; margin: 0 auto; padding: 4rem 1rem 5rem; }
+        .angebot-kicker { display: inline-flex; align-items: center; gap: .55rem; padding: .65rem 1rem; border-radius: 999px; background: #fff; color: #321EE6; border: 1px solid rgba(50, 30, 230, .10); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; box-shadow: 0 14px 35px rgba(19, 23, 38, .06); }
+        .angebot-dot { width: .55rem; height: .55rem; background: #A0E628; display: inline-block; }
+        .angebot-title { margin-top: 1.6rem; max-width: 850px; color: #321EE6; font-family: Outfit, Montserrat, sans-serif; font-weight: 900; font-size: clamp(2.4rem, 7vw, 5.4rem); line-height: .98; text-transform: uppercase; }
+        .angebot-lead { max-width: 720px; margin-top: 1.4rem; color: #374151; font-size: clamp(1.05rem, 2vw, 1.25rem); line-height: 1.7; }
+        .angebot-grid { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr); gap: 2rem; align-items: start; margin-top: 3rem; }
+        .angebot-panel { background: #fff; border: 1px solid rgba(229, 231, 235, .95); box-shadow: 0 24px 70px rgba(19, 23, 38, .10); border-radius: 2rem; padding: clamp(1.35rem, 3vw, 2rem); }
+        .angebot-panel.form-panel { border-radius: 2.4rem; padding: clamp(1.45rem, 3vw, 2.75rem); position: relative; }
+        .angebot-badge { position: absolute; top: -1.2rem; right: 1.4rem; width: 6rem; height: 6rem; border-radius: 999px; background: #321EE6; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transform: rotate(10deg); box-shadow: 0 18px 35px rgba(50, 30, 230, .25); font-family: Outfit, Montserrat, sans-serif; font-weight: 900; line-height: 1.05; pointer-events: none; }
+        .angebot-badge small { font-size: .58rem; letter-spacing: .08em; text-transform: uppercase; }
+        .angebot-badge span { font-size: 1.15rem; }
+        .choice-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; margin-top: 1rem; }
+        .chip-button, .tab-button, .interest-option { border: 2px solid #edf0f5; background: #fff; color: #321EE6; font-weight: 800; transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease; }
+        .chip-button { min-height: 4.6rem; border-radius: 1.2rem; padding: 1rem; display: flex; align-items: center; justify-content: center; gap: .7rem; text-transform: uppercase; font-size: .8rem; letter-spacing: .04em; }
+        .chip-button:hover, .tab-button:hover, .interest-option:hover { transform: translateY(-1px); border-color: rgba(160, 230, 40, .8); box-shadow: 0 14px 25px rgba(19, 23, 38, .07); }
+        .chip-button.is-active, .tab-button.is-active, .interest-option input:checked + span { border-color: #A0E628; background: rgba(160, 230, 40, .12); }
+        .tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; padding: .45rem; background: #f4f7fb; border: 1px solid #eef0f4; border-radius: 999px; margin: 1.4rem 0 1.6rem; }
+        .tab-button { border-width: 0; border-radius: 999px; min-height: 2.6rem; font-size: .76rem; letter-spacing: .05em; text-transform: uppercase; }
+        .tab-button.is-active { background: #fff; box-shadow: 0 10px 22px rgba(19, 23, 38, .08); }
+        .calc-pane[hidden] { display: none; }
+        .calc-label { color: #321EE6; font-family: Outfit, Montserrat, sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; font-size: .86rem; }
+        .calc-subcopy { color: #667085; margin-top: .35rem; font-size: .9rem; }
+        .calc-value-row { margin-top: 1.7rem; display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+        .calc-value { color: #321EE6; font-family: Outfit, Montserrat, sans-serif; font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1; font-weight: 900; }
+        .calc-unit { color: #98a2b3; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .3rem; }
+        .range-track { position: relative; height: .72rem; margin-top: 1.4rem; background: #ecf0f6; border-radius: 999px; }
+        .range-fill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: inherit; background: #A0E628; box-shadow: 0 0 18px rgba(160, 230, 40, .55); }
+        .range-fill.waerme { background: #321EE6; box-shadow: 0 0 18px rgba(50, 30, 230, .32); }
+        .range-thumb { position: absolute; top: 50%; left: 0; width: 1.75rem; height: 1.75rem; transform: translate(-50%, -50%); border-radius: 999px; background: #fff; border: 5px solid #A0E628; box-shadow: 0 8px 18px rgba(19, 23, 38, .16); pointer-events: none; }
+        .range-thumb.waerme { border-color: #321EE6; }
+        .range-track input[type="range"] { position: absolute; inset: -.55rem 0; width: 100%; opacity: 0; cursor: pointer; }
+        .range-scale { display: flex; justify-content: space-between; margin-top: .85rem; color: #98a2b3; font-size: .72rem; font-weight: 800; }
+        .savings-box { margin-top: 1.8rem; padding: 1.45rem; border-radius: 1.35rem; background: #f4f7fb; text-align: center; border: 1px solid #edf0f5; }
+        .savings-label { color: #667085; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+        .savings-value { margin-top: .45rem; display: flex; align-items: center; justify-content: center; gap: .45rem; color: #00B67A; font-family: Outfit, Montserrat, sans-serif; font-weight: 900; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1; }
+        .savings-note { margin-top: .75rem; color: #98a2b3; font-size: .72rem; line-height: 1.45; }
+        .co2-pill { margin-top: .9rem; display: inline-flex; align-items: center; gap: .35rem; border-radius: 999px; padding: .45rem .8rem; color: #00B67A; background: rgba(0, 182, 122, .11); font-weight: 900; font-size: .74rem; text-transform: uppercase; letter-spacing: .04em; }
+        .trust-row { display: flex; flex-wrap: wrap; gap: .75rem 1.15rem; margin-top: 1.2rem; color: #321EE6; font-size: .78rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+        .trust-row span { display: inline-flex; align-items: center; gap: .45rem; }
+        .form-title { color: #321EE6; font-family: Outfit, Montserrat, sans-serif; font-size: clamp(1.8rem, 4vw, 2.7rem); font-weight: 900; line-height: 1.05; margin-bottom: .6rem; }
+        .form-copy { color: #667085; max-width: 640px; line-height: 1.65; margin-bottom: 1.7rem; }
+        .form-section-label { color: #321EE6; display: block; font-size: .72rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; margin: 1.2rem 0 .8rem; }
+        .interest-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; }
+        .interest-option input { position: absolute; opacity: 0; pointer-events: none; }
+        .interest-option span { min-height: 5.1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .55rem; border: 2px solid #edf0f5; border-radius: 1rem; color: #321EE6; font-weight: 900; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; }
+        .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+        .field { display: flex; flex-direction: column; gap: .45rem; }
+        .field.full { grid-column: 1 / -1; }
+        .field label { color: #667085; font-size: .68rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; padding-left: .1rem; }
+        .field input, .field textarea { width: 100%; border-radius: .9rem; border: 1px solid transparent; background: #f4f7fb; color: #321EE6; padding: 1rem 1.1rem; outline: none; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+        .field textarea { min-height: 7.5rem; resize: vertical; }
+        .field input:focus, .field textarea:focus { background: #fff; border-color: #A0E628; box-shadow: 0 0 0 3px rgba(160, 230, 40, .22); }
+        .consent { display: flex; gap: .65rem; align-items: flex-start; color: #667085; font-size: .82rem; line-height: 1.45; }
+        .consent input { margin-top: .2rem; }
+        .submit-button { width: 100%; min-height: 3.8rem; border-radius: 999px; background: #FA9600; color: #fff; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; box-shadow: 0 18px 35px rgba(250, 150, 0, .28); transition: transform .2s ease, opacity .2s ease; }
+        .submit-button:hover { transform: translateY(-1px); opacity: .93; }
+        .kontakt-mini { margin-top: 1.2rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+        .kontakt-mini a, .kontakt-mini span { border-radius: 1rem; background: #fff; border: 1px solid #edf0f5; padding: .9rem; color: #321EE6; font-size: .78rem; font-weight: 800; text-align: center; }
+        @media (max-width: 1023px) { .angebot-grid { grid-template-columns: 1fr; } .angebot-badge { display: none; } }
+        @media (max-width: 760px) { .angebot-shell { padding-top: 2.5rem; } .choice-row, .field-grid, .kontakt-mini { grid-template-columns: 1fr; } .interest-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .angebot-panel { border-radius: 1.4rem; } .angebot-panel.form-panel { border-radius: 1.5rem; } }
     </style>
 </head>
 <body class="relative text-brand-textBody bg-brand-light antialiased h-full">
-
     <header class="bg-brand-blue text-white w-full z-50" id="main-header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
@@ -479,348 +85,147 @@
                         <img src="./gruen_blau_schriftzug.webp" alt="HomePlus Rhein-Neckar Schriftzug" aria-hidden="true" class="absolute -left-1 md:-left-2 top-1/2 -translate-y-1/2 h-8 md:h-10 w-auto max-w-none object-contain object-left transition-opacity duration-300 opacity-0 glass-nav-logo-color pointer-events-none">
                     </div>
                 </a>
-
                 <nav class="hidden lg:flex items-center space-x-5 xl:space-x-8" aria-label="Hauptnavigation Desktop">
                     <a href="./photovoltaik.html" class="nav-link text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase">Photovoltaik</a>
-                    <a href="./waermepumpen.html" class="nav-link text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase">Waermepumpen</a>
+                    <a href="./waermepumpen.html" class="nav-link text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase">Wärmepumpen</a>
                     <a href="./ablauf.html" class="nav-link text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase">Ablauf</a>
                     <div class="relative group" id="nav-ratgeber">
-                        <button class="nav-link flex items-center gap-1 text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase focus:outline-none" aria-haspopup="true" aria-expanded="false" onclick="toggleRatgeberDropdown(event)">
-                            Ratgeber <svg class="w-3 h-3 transition-transform duration-200" id="ratgeber-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        </button>
+                        <button class="nav-link flex items-center gap-1 text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase focus:outline-none" aria-haspopup="true" aria-expanded="false" onclick="toggleRatgeberDropdown(event)">Ratgeber <svg class="w-3 h-3 transition-transform duration-200" id="ratgeber-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                         <div id="ratgeber-dropdown" class="hidden absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50">
                             <a href="./photovoltaik-wissen.html" class="flex items-center gap-3 px-5 py-4 text-sm font-semibold text-brand-blue hover:bg-brand-light hover:text-brand-primary transition-colors border-b border-gray-50">Photovoltaik Ratgeber</a>
-                            <a href="./waermepumpen-wissen.html" class="flex items-center gap-3 px-5 py-4 text-sm font-semibold text-brand-blue hover:bg-brand-light hover:text-brand-primary transition-colors border-b border-gray-50">Waermepumpen Ratgeber</a>
-                            <a href="./foerdercheck.html" class="flex items-center gap-3 px-5 py-4 text-sm font-semibold text-brand-blue hover:bg-brand-light hover:text-brand-primary transition-colors">Foerder-Check 2026</a>
+                            <a href="./waermepumpen-wissen.html" class="flex items-center gap-3 px-5 py-4 text-sm font-semibold text-brand-blue hover:bg-brand-light hover:text-brand-primary transition-colors border-b border-gray-50">Wärmepumpen Ratgeber</a>
+                            <a href="./foerdercheck.html" class="flex items-center gap-3 px-5 py-4 text-sm font-semibold text-brand-blue hover:bg-brand-light hover:text-brand-primary transition-colors">Förder-Check 2026</a>
                         </div>
                     </div>
                     <a href="./leistungen.html" class="nav-link text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase">Leistungen</a>
-                    <a href="./ueber-uns.html" class="nav-link text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase">Ueber uns</a>
+                    <a href="./ueber-uns.html" class="nav-link text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase">Über uns</a>
                     <a href="./projekte.html" class="nav-link text-white hover:text-brand-primary font-semibold transition-colors font-sans text-sm tracking-wide uppercase">Referenzen</a>
                     <a href="./kontakt.html#anfrage" class="bg-brand-disturbingOrange hover:opacity-90 text-white px-6 xl:px-8 py-3 rounded-full font-bold shadow-lg transition-all transform hover:-translate-y-1 active:scale-95 font-sans uppercase text-sm tracking-wide">Anfragen</a>
                 </nav>
-                <button id="mobile-menu-btn" class="lg:hidden bg-white/10 backdrop-blur-md p-2 rounded-xl text-white" aria-label="Mobiles Menue oeffnen" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
-                </button>
+                <button id="mobile-menu-btn" class="lg:hidden bg-white/10 backdrop-blur-md p-2 rounded-xl text-white" aria-label="Mobiles Menü öffnen" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button>
             </div>
         </div>
         <nav id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-2xl border-t border-gray-100 p-6 space-y-4" aria-label="Hauptnavigation Mobil">
             <a href="./photovoltaik.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Photovoltaik</a>
-            <a href="./waermepumpen.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Waermepumpen</a>
+            <a href="./waermepumpen.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Wärmepumpen</a>
             <a href="./ablauf.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Ablauf</a>
             <a href="./photovoltaik-wissen.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Photovoltaik Ratgeber</a>
-            <a href="./waermepumpen-wissen.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Waermepumpen Ratgeber</a>
-            <a href="./foerdercheck.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Foerder-Check 2026</a>
+            <a href="./waermepumpen-wissen.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Wärmepumpen Ratgeber</a>
+            <a href="./foerdercheck.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Förder-Check 2026</a>
             <a href="./leistungen.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Leistungen</a>
-            <a href="./ueber-uns.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Ueber uns</a>
+            <a href="./ueber-uns.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Über uns</a>
             <a href="./projekte.html" class="block text-lg font-bold text-brand-blue py-2 border-b border-gray-50 font-sans uppercase transition-colors">Referenzen</a>
             <a href="./kontakt.html#anfrage" class="block text-lg font-bold text-white bg-brand-disturbingOrange py-2 rounded-full text-center font-sans uppercase transition-colors">Anfragen</a>
         </nav>
     </header>
 
     <script type="text/javascript">
-        function toggleRatgeberDropdown(e) {
-            e.stopPropagation();
-            const dd = document.getElementById('ratgeber-dropdown');
-            const ch = document.getElementById('ratgeber-chevron');
-            const isOpen = !dd.classList.contains('hidden');
-            dd.classList.toggle('hidden');
-            ch.style.transform = isOpen ? '' : 'rotate(180deg)';
-        }
-        document.addEventListener('click', function() {
-            const dd = document.getElementById('ratgeber-dropdown');
-            const ch = document.getElementById('ratgeber-chevron');
-            if (dd) { dd.classList.add('hidden'); ch.style.transform = ''; }
-        });
+        function toggleRatgeberDropdown(e) { e.stopPropagation(); const dd = document.getElementById('ratgeber-dropdown'); const ch = document.getElementById('ratgeber-chevron'); const isOpen = !dd.classList.contains('hidden'); dd.classList.toggle('hidden'); ch.style.transform = isOpen ? '' : 'rotate(180deg)'; }
+        document.addEventListener('click', function() { const dd = document.getElementById('ratgeber-dropdown'); const ch = document.getElementById('ratgeber-chevron'); if (dd) { dd.classList.add('hidden'); ch.style.transform = ''; } });
     </script>
 
     <main class="angebot-hero" id="anfrage">
         <div class="angebot-shell">
             <span class="angebot-kicker"><span class="angebot-dot"></span> Angebot kostenlos & unverbindlich</span>
             <h1 class="angebot-title">Jetzt Potenzial berechnen</h1>
-            <p class="angebot-lead">Berechnen Sie eine erste moegliche Ersparnis und senden Sie uns direkt die wichtigsten Eckdaten. Wir pruefen Ihr Vorhaben fuer Mannheim und Rhein-Neckar persoenlich.</p>
+            <p class="angebot-lead">Berechnen Sie eine erste mögliche Ersparnis und senden Sie uns direkt die wichtigsten Eckdaten. Wir prüfen Ihr Vorhaben für Mannheim und Rhein-Neckar persönlich.</p>
 
             <div class="angebot-grid">
                 <section class="angebot-panel" aria-label="Ersparnisrechner">
                     <p class="calc-label">Ihr Status</p>
                     <div class="choice-row" role="group" aria-label="Kundentyp">
-                        <button type="button" class="chip-button is-active" id="chip-owner" data-customer="Hauseigentuemer"><i data-lucide="home" aria-hidden="true"></i> Hauseigentuemer</button>
+                        <button type="button" class="chip-button is-active" id="chip-owner" data-customer="Hauseigentümer"><i data-lucide="home" aria-hidden="true"></i> Hauseigentümer</button>
                         <button type="button" class="chip-button" id="chip-tenant" data-customer="Mieter"><i data-lucide="key-round" aria-hidden="true"></i> Mieter</button>
                     </div>
-
                     <div class="tabs" role="tablist" aria-label="Rechnerauswahl">
                         <button type="button" class="tab-button is-active" id="tab-solar" data-calc="solar" role="tab" aria-selected="true" aria-controls="pane-solar"><i data-lucide="sun" aria-hidden="true"></i> Solar</button>
-                        <button type="button" class="tab-button" id="tab-waerme" data-calc="waerme" role="tab" aria-selected="false" aria-controls="pane-waerme"><i data-lucide="thermometer" aria-hidden="true"></i> Waermepumpe</button>
+                        <button type="button" class="tab-button" id="tab-waerme" data-calc="waerme" role="tab" aria-selected="false" aria-controls="pane-waerme"><i data-lucide="thermometer" aria-hidden="true"></i> Wärmepumpe</button>
                     </div>
-
                     <div id="pane-solar" class="calc-pane" role="tabpanel" aria-labelledby="tab-solar">
                         <p class="calc-label">Ihr Stromkosten-Rechner</p>
                         <p class="calc-subcopy">Was zahlen Sie aktuell monatlich an Ihren Stromanbieter?</p>
-                        <div class="calc-value-row">
-                            <p class="calc-value"><span id="solar-monthly">150</span> EUR</p>
-                            <p class="calc-unit">Monatlich</p>
-                        </div>
-                        <div class="range-track">
-                            <div class="range-fill" id="solar-fill"></div>
-                            <div class="range-thumb" id="solar-thumb"></div>
-                            <input type="range" id="solar-slider" min="50" max="500" step="10" value="150" aria-label="Monatliche Stromkosten">
-                        </div>
-                        <div class="range-scale"><span>50 EUR</span><span>500 EUR</span></div>
-                        <div class="savings-box">
-                            <p class="savings-label">Moegliche Ersparnis in 20 Jahren*</p>
-                            <p class="savings-value"><i data-lucide="trending-down" aria-hidden="true"></i><span id="solar-savings">41.300</span> EUR</p>
-                            <p class="savings-note">*Unverbindliche Schaetzung bei 70% Autarkie und 3% Strompreisanstieg pro Jahr.</p>
-                        </div>
+                        <div class="calc-value-row"><p class="calc-value"><span id="solar-monthly">150</span> €</p><p class="calc-unit">Monatlich</p></div>
+                        <div class="range-track"><div class="range-fill" id="solar-fill"></div><div class="range-thumb" id="solar-thumb"></div><input type="range" id="solar-slider" min="50" max="500" step="10" value="150" aria-label="Monatliche Stromkosten"></div>
+                        <div class="range-scale"><span>50 €</span><span>500 €</span></div>
+                        <div class="savings-box"><p class="savings-label">Mögliche Ersparnis in 20 Jahren*</p><p class="savings-value"><i data-lucide="trending-down" aria-hidden="true"></i><span id="solar-savings">41.300</span> €</p><p class="savings-note">*Unverbindliche Schätzung bei 70% Autarkie und 3% Strompreisanstieg pro Jahr.</p></div>
                     </div>
-
                     <div id="pane-waerme" class="calc-pane" role="tabpanel" aria-labelledby="tab-waerme" hidden>
                         <p class="calc-label">Ihr Heizkosten-Rechner</p>
-                        <p class="calc-subcopy">Was zahlen Sie aktuell monatlich fuer Gas oder Heizoel?</p>
-                        <div class="calc-value-row">
-                            <p class="calc-value"><span id="waerme-monthly">200</span> EUR</p>
-                            <p class="calc-unit">Monatlich</p>
-                        </div>
-                        <div class="range-track">
-                            <div class="range-fill waerme" id="waerme-fill"></div>
-                            <div class="range-thumb waerme" id="waerme-thumb"></div>
-                            <input type="range" id="waerme-slider" min="50" max="600" step="10" value="200" aria-label="Monatliche Heizkosten">
-                        </div>
-                        <div class="range-scale"><span>50 EUR</span><span>600 EUR</span></div>
-                        <div class="savings-box">
-                            <p class="savings-label">Ersparnis inkl. Foerderung in 20 Jahren*</p>
-                            <p class="savings-value"><i data-lucide="trending-down" aria-hidden="true"></i><span id="waerme-savings">38.500</span> EUR</p>
-                            <span class="co2-pill"><i data-lucide="leaf" aria-hidden="true"></i> ca. <span id="waerme-co2">65</span>t CO2 gespart</span>
-                            <p class="savings-note">*Schaetzung: 35% Effizienz-Ersparnis gegenueber fossil, 3% Preissteigerung und moegliche staatliche Foerderung.</p>
-                        </div>
+                        <p class="calc-subcopy">Was zahlen Sie aktuell monatlich für Gas oder Heizöl?</p>
+                        <div class="calc-value-row"><p class="calc-value"><span id="waerme-monthly">200</span> €</p><p class="calc-unit">Monatlich</p></div>
+                        <div class="range-track"><div class="range-fill waerme" id="waerme-fill"></div><div class="range-thumb waerme" id="waerme-thumb"></div><input type="range" id="waerme-slider" min="50" max="600" step="10" value="200" aria-label="Monatliche Heizkosten"></div>
+                        <div class="range-scale"><span>50 €</span><span>600 €</span></div>
+                        <div class="savings-box"><p class="savings-label">Ersparnis inkl. Förderung in 20 Jahren*</p><p class="savings-value"><i data-lucide="trending-down" aria-hidden="true"></i><span id="waerme-savings">38.500</span> €</p><span class="co2-pill"><i data-lucide="leaf" aria-hidden="true"></i> ca. <span id="waerme-co2">65</span>t CO₂ gespart</span><p class="savings-note">*Schätzung: 35% Effizienz-Ersparnis gegenüber fossil, 3% Preissteigerung und mögliche staatliche Förderung.</p></div>
                     </div>
-
-                    <div class="trust-row" aria-label="Vertrauen">
-                        <span><i data-lucide="star" aria-hidden="true"></i> 4.7/5 Google</span>
-                        <span><i data-lucide="shield-check" aria-hidden="true"></i> Alles aus einer Hand</span>
-                    </div>
+                    <div class="trust-row" aria-label="Vertrauen"><span><i data-lucide="star" aria-hidden="true"></i> 4.7/5 Google</span><span><i data-lucide="shield-check" aria-hidden="true"></i> Alles aus einer Hand</span></div>
                 </section>
 
                 <section class="angebot-panel form-panel" aria-label="Angebotsformular">
                     <div class="angebot-badge" aria-hidden="true"><small>Angebot in</small><span>2 Min.</span><small>anfordern</small></div>
                     <h2 class="form-title">Kostenloses Angebot anfordern</h2>
-                    <p class="form-copy">Teilen Sie uns kurz mit, worum es geht. Ihre Rechnerwerte werden automatisch mitgesendet, damit wir schneller und genauer reagieren koennen.</p>
-
+                    <p class="form-copy">Teilen Sie uns kurz mit, worum es geht. Ihre Rechnerwerte werden automatisch mitgesendet, damit wir schneller und genauer reagieren können.</p>
                     <form action="https://formspree.io/f/xdajyvbv" method="POST" id="main-lead-form">
-                        <input type="hidden" name="_subject" value="Neue Anfrage ueber HomePlus Rhein-Neckar Rechner">
+                        <input type="hidden" name="_subject" value="Neue Anfrage über HomePlus Rhein-Neckar Rechner">
                         <input type="text" name="website" tabindex="-1" autocomplete="off" style="display:none">
-                        <input type="hidden" name="Kundentyp" id="form-customer" value="Hauseigentuemer">
+                        <input type="hidden" name="Kundentyp" id="form-customer" value="Hauseigentümer">
                         <input type="hidden" name="Rechner_Typ" id="form-calc-type" value="Solar">
                         <input type="hidden" name="Monatliche_Kosten" id="form-monthly-cost" value="150">
                         <input type="hidden" name="Geschaetzte_Ersparnis" id="form-savings" value="41300">
                         <input type="hidden" name="CO2_Ersparnis" id="form-co2" value="">
-
-                        <span class="form-section-label">1. Wofuer interessieren Sie sich?</span>
+                        <span class="form-section-label">1. Wofür interessieren Sie sich?</span>
                         <div class="interest-grid">
                             <label class="interest-option"><input type="checkbox" name="Interesse[]" value="Photovoltaik" data-calc-target="solar"><span><i data-lucide="sun" aria-hidden="true"></i> Solar</span></label>
-                            <label class="interest-option"><input type="checkbox" name="Interesse[]" value="Waermepumpe" data-calc-target="waerme"><span><i data-lucide="thermometer" aria-hidden="true"></i> Waerme</span></label>
+                            <label class="interest-option"><input type="checkbox" name="Interesse[]" value="Wärmepumpe" data-calc-target="waerme"><span><i data-lucide="thermometer" aria-hidden="true"></i> Wärme</span></label>
                             <label class="interest-option"><input type="checkbox" name="Interesse[]" value="Elektro"><span><i data-lucide="battery-charging" aria-hidden="true"></i> Elektro</span></label>
                             <label class="interest-option"><input type="checkbox" name="Interesse[]" value="Wallbox"><span><i data-lucide="zap" aria-hidden="true"></i> Wallbox</span></label>
                         </div>
-
                         <span class="form-section-label">2. Ihre Daten</span>
                         <div class="field-grid">
-                            <div class="field">
-                                <label for="vorname">Vorname</label>
-                                <input type="text" id="vorname" name="Vorname" placeholder="Max" required>
-                            </div>
-                            <div class="field">
-                                <label for="nachname">Nachname</label>
-                                <input type="text" id="nachname" name="Nachname" placeholder="Mustermann" required>
-                            </div>
-                            <div class="field full">
-                                <label for="strasse_hausnummer">Strasse & Hausnummer</label>
-                                <input type="text" id="strasse_hausnummer" name="Strasse" placeholder="Musterstrasse 1" autocomplete="street-address" required>
-                            </div>
-                            <div class="field">
-                                <label for="plz">PLZ</label>
-                                <input type="text" id="plz" name="PLZ" placeholder="68159" inputmode="numeric" required>
-                            </div>
-                            <div class="field">
-                                <label for="ort">Ort</label>
-                                <input type="text" id="ort" name="Ort" placeholder="Mannheim" required>
-                            </div>
-                            <div class="field">
-                                <label for="email">E-Mail</label>
-                                <input type="email" id="email" name="E-Mail" placeholder="name@example.de" required>
-                            </div>
-                            <div class="field">
-                                <label for="telefon">Telefon</label>
-                                <input type="tel" id="telefon" name="Telefon" placeholder="+49 15565 415 254">
-                            </div>
-                            <div class="field full">
-                                <label for="nachricht">Nachricht</label>
-                                <textarea id="nachricht" name="Nachricht" placeholder="Was ist Ihnen wichtig? Dach, Verbrauch, Heizung oder gewuenschter Zeitraum?"></textarea>
-                            </div>
+                            <div class="field"><label for="vorname">Vorname</label><input type="text" id="vorname" name="Vorname" placeholder="Max" required></div>
+                            <div class="field"><label for="nachname">Nachname</label><input type="text" id="nachname" name="Nachname" placeholder="Mustermann" required></div>
+                            <div class="field full"><label for="strasse_hausnummer">Straße & Hausnummer</label><input type="text" id="strasse_hausnummer" name="Strasse" placeholder="Musterstraße 1" autocomplete="street-address" required></div>
+                            <div class="field"><label for="plz">PLZ</label><input type="text" id="plz" name="PLZ" placeholder="68159" inputmode="numeric" required></div>
+                            <div class="field"><label for="ort">Ort</label><input type="text" id="ort" name="Ort" placeholder="Mannheim" required></div>
+                            <div class="field"><label for="email">E-Mail</label><input type="email" id="email" name="E-Mail" placeholder="name@example.de" required></div>
+                            <div class="field"><label for="telefon">Telefon</label><input type="tel" id="telefon" name="Telefon" placeholder="+49 15565 415 254"></div>
+                            <div class="field full"><label for="nachricht">Nachricht</label><textarea id="nachricht" name="Nachricht" placeholder="Was ist Ihnen wichtig? Dach, Verbrauch, Heizung oder gewünschter Zeitraum?"></textarea></div>
                         </div>
-
-                        <label class="consent" for="datenschutz">
-                            <input type="checkbox" id="datenschutz" name="Datenschutz akzeptiert" value="Ja" required>
-                            <span>Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Details stehen in der Datenschutzerklaerung.</span>
-                        </label>
-
+                        <label class="consent" for="datenschutz"><input type="checkbox" id="datenschutz" name="Datenschutz akzeptiert" value="Ja" required><span>Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Details stehen in der Datenschutzerklärung.</span></label>
                         <button type="submit" class="submit-button">Angebot anfordern</button>
                     </form>
                 </section>
             </div>
-
-            <div class="kontakt-mini" aria-label="Direkter Kontakt">
-                <a href="tel:+4915565415254">Telefon: +49 15565 415 254</a>
-                <a href="mailto:info@homeplus-rn.de">info@homeplus-rn.de</a>
-                <a href="https://wa.me/4915565415254" target="_blank" rel="noopener noreferrer">WhatsApp schreiben</a>
-            </div>
+            <div class="kontakt-mini" aria-label="Direkter Kontakt"><a href="tel:+4915565415254">Telefon: +49 15565 415 254</a><a href="mailto:info@homeplus-rn.de">info@homeplus-rn.de</a><a href="https://wa.me/4915565415254" target="_blank" rel="noopener noreferrer">WhatsApp schreiben</a></div>
         </div>
     </main>
 
     <footer class="bg-white footer-light pt-16 pb-8 px-4" role="contentinfo">
         <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-            <div class="flex flex-col space-y-8">
-                <div class="flex items-center gap-1 cursor-pointer" onclick="window.location.href='./'" role="button" tabindex="0" aria-label="Zurueck zur Startseite">
-                    <img src="./gruen_blau_schriftzug.webp" loading="lazy" alt="HomePlus Rhein-Neckar Logo" class="h-10 md:h-12 w-auto object-contain max-w-full">
-                </div>
-                <div class="space-y-4 font-medium font-sans text-sm leading-relaxed pt-2 text-brand-blue">
-                    <p class="font-bold">Buero &amp; Lager</p>
-                    <p>Regionalbuero Mannheim<br>68159 Mannheim</p>
-                    <p><a href="tel:+4915565415254" class="hover:text-brand-primary transition-colors">+49 15565 415 254</a></p>
-                    <p><a href="mailto:info@homeplus-rn.de" class="hover:text-brand-primary transition-colors break-all">info@homeplus-rn.de</a></p>
-                </div>
-            </div>
-            <div class="lg:pl-8 lg:pt-4">
-                <h4 class="text-xl font-bold font-sans text-brand-blue mb-4">Homeplus</h4>
-                <ul class="space-y-3 font-medium font-sans text-sm text-brand-blue">
-                    <li><a href="./leistungen.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Alle Leistungen</a></li>
-                    <li><a href="./photovoltaik.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Photovoltaik</a></li>
-                    <li><a href="./waermepumpen.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Waermepumpen</a></li>
-                    <li><a href="./leistungen.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Elektro</a></li>
-                    <li><a href="./index.html#faq" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">FAQ</a></li>
-                </ul>
-            </div>
-            <div class="lg:pt-4">
-                <h4 class="text-xl font-bold font-sans text-brand-blue mb-4">Rechtliches</h4>
-                <ul class="space-y-3 font-medium font-sans text-sm text-brand-blue">
-                    <li><a href="./datenschutz.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Datenschutz</a></li>
-                    <li><a href="./impressum.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Impressum</a></li>
-                    <li><a href="./agb.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">AGB</a></li>
-                    <li><a href="./cookie-richtlinie.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Cookie-Richtlinie</a></li>
-                    <li><a href="./barrierefreiheit.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Barrierefreiheitserklaerung</a></li>
-                </ul>
-            </div>
-            <div class="lg:pt-4">
-                <h4 class="text-xl font-bold font-sans text-brand-blue mb-4">Unternehmen</h4>
-                <ul class="space-y-3 font-medium font-sans text-sm text-brand-blue">
-                    <li><a href="./ueber-uns.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Ueber uns</a></li>
-                    <li><a href="./projekte.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Referenzprojekte</a></li>
-                    <li><a href="./kontakt.html#anfrage" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Kontakt aufnehmen</a></li>
-                </ul>
-            </div>
+            <div class="flex flex-col space-y-8"><div class="flex items-center gap-1 cursor-pointer" onclick="window.location.href='./'" role="button" tabindex="0" aria-label="Zurück zur Startseite"><img src="./gruen_blau_schriftzug.webp" loading="lazy" alt="HomePlus Rhein-Neckar Logo" class="h-10 md:h-12 w-auto object-contain max-w-full"></div><div class="space-y-4 font-medium font-sans text-sm leading-relaxed pt-2 text-brand-blue"><p class="font-bold">Büro &amp; Lager</p><p>Regionalbüro Mannheim<br>68159 Mannheim</p><p><a href="tel:+4915565415254" class="hover:text-brand-primary transition-colors">+49 15565 415 254</a></p><p><a href="mailto:info@homeplus-rn.de" class="hover:text-brand-primary transition-colors break-all">info@homeplus-rn.de</a></p></div></div>
+            <div class="lg:pl-8 lg:pt-4"><h4 class="text-xl font-bold font-sans text-brand-blue mb-4">Homeplus</h4><ul class="space-y-3 font-medium font-sans text-sm text-brand-blue"><li><a href="./leistungen.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Alle Leistungen</a></li><li><a href="./photovoltaik.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Photovoltaik</a></li><li><a href="./waermepumpen.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Wärmepumpen</a></li><li><a href="./leistungen.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Elektro</a></li><li><a href="./index.html#faq" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">FAQ</a></li></ul></div>
+            <div class="lg:pt-4"><h4 class="text-xl font-bold font-sans text-brand-blue mb-4">Rechtliches</h4><ul class="space-y-3 font-medium font-sans text-sm text-brand-blue"><li><a href="./datenschutz.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Datenschutz</a></li><li><a href="./impressum.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Impressum</a></li><li><a href="./agb.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">AGB</a></li><li><a href="./cookie-richtlinie.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Cookie-Richtlinie</a></li><li><a href="./barrierefreiheit.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Barrierefreiheitserklärung</a></li></ul></div>
+            <div class="lg:pt-4"><h4 class="text-xl font-bold font-sans text-brand-blue mb-4">Unternehmen</h4><ul class="space-y-3 font-medium font-sans text-sm text-brand-blue"><li><a href="./ueber-uns.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Über uns</a></li><li><a href="./projekte.html" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Referenzprojekte</a></li><li><a href="./kontakt.html#anfrage" class="hover:text-brand-primary transition-transform hover:translate-x-1 inline-block duration-300">Kontakt aufnehmen</a></li></ul></div>
         </div>
-        <div class="mt-12 pt-6 border-t border-brand-blue/10 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm font-medium text-brand-blue/50 font-sans">
-            <p>&copy; 2026 HomePlus Rhein-Neckar. Alle Rechte vorbehalten.</p>
-            <p>Mit <span class="inline-block bg-brand-primary align-baseline w-[0.32em] h-[0.32em] mx-1"></span> Energie fuer Mannheim &amp; Rhein-Neckar</p>
-        </div>
+        <div class="mt-12 pt-6 border-t border-brand-blue/10 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm font-medium text-brand-blue/50 font-sans"><p>&copy; 2026 HomePlus Rhein-Neckar. Alle Rechte vorbehalten.</p><p>Mit <span class="inline-block bg-brand-primary align-baseline w-[0.32em] h-[0.32em] mx-1"></span> Energie für Mannheim &amp; Rhein-Neckar</p></div>
     </footer>
 
     <script src="./main.js"></script>
     <script>
         (function() {
-            const state = { type: 'solar', customer: 'Hauseigentuemer', monthly: 150, savings: 41300, co2: '' };
+            const state = { type: 'solar', customer: 'Hauseigentümer', monthly: 150, savings: 41300, co2: '' };
             const eur = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
             const el = (id) => document.getElementById(id);
-
-            function syncHidden() {
-                if (el('form-customer')) el('form-customer').value = state.customer;
-                if (el('form-calc-type')) el('form-calc-type').value = state.type === 'solar' ? 'Solar' : 'Waermepumpe';
-                if (el('form-monthly-cost')) el('form-monthly-cost').value = state.monthly;
-                if (el('form-savings')) el('form-savings').value = state.savings;
-                if (el('form-co2')) el('form-co2').value = state.co2;
-            }
-
-            function updateRange(prefix) {
-                const slider = el(prefix + '-slider');
-                if (!slider) return;
-                const min = Number(slider.min);
-                const max = Number(slider.max);
-                const value = Number(slider.value);
-                const percentage = ((value - min) / (max - min)) * 100;
-                if (el(prefix + '-fill')) el(prefix + '-fill').style.width = percentage + '%';
-                if (el(prefix + '-thumb')) el(prefix + '-thumb').style.left = percentage + '%';
-                if (el(prefix + '-monthly')) el(prefix + '-monthly').textContent = value;
-            }
-
-            function calculateSolar() {
-                const value = Number(el('solar-slider').value);
-                const q = 1.03;
-                const totalCost20Years = (value * 12) * ((Math.pow(q, 20) - 1) / (q - 1));
-                const savings = Math.round((totalCost20Years * 0.70) / 100) * 100;
-                if (el('solar-savings')) el('solar-savings').textContent = eur.format(savings);
-                updateRange('solar');
-                if (state.type === 'solar') {
-                    state.monthly = value;
-                    state.savings = savings;
-                    state.co2 = '';
-                    syncHidden();
-                }
-            }
-
-            function calculateWaerme() {
-                const value = Number(el('waerme-slider').value);
-                const q = 1.03;
-                const totalCost20Years = (value * 12) * ((Math.pow(q, 20) - 1) / (q - 1));
-                const savings = Math.round((totalCost20Years * 0.35) / 100) * 100;
-                const co2 = Math.round((value / 200) * 3 * 20);
-                if (el('waerme-savings')) el('waerme-savings').textContent = eur.format(savings);
-                if (el('waerme-co2')) el('waerme-co2').textContent = co2;
-                updateRange('waerme');
-                if (state.type === 'waerme') {
-                    state.monthly = value;
-                    state.savings = savings;
-                    state.co2 = co2 + ' t';
-                    syncHidden();
-                }
-            }
-
-            function switchCalc(type) {
-                state.type = type;
-                const isSolar = type === 'solar';
-                el('pane-solar').hidden = !isSolar;
-                el('pane-waerme').hidden = isSolar;
-                el('tab-solar').classList.toggle('is-active', isSolar);
-                el('tab-waerme').classList.toggle('is-active', !isSolar);
-                el('tab-solar').setAttribute('aria-selected', String(isSolar));
-                el('tab-waerme').setAttribute('aria-selected', String(!isSolar));
-                if (isSolar) calculateSolar(); else calculateWaerme();
-                if (typeof lucide !== 'undefined') lucide.createIcons();
-            }
-
-            document.querySelectorAll('[data-customer]').forEach((button) => {
-                button.addEventListener('click', () => {
-                    state.customer = button.dataset.customer;
-                    document.querySelectorAll('[data-customer]').forEach((b) => b.classList.remove('is-active'));
-                    button.classList.add('is-active');
-                    syncHidden();
-                });
-            });
-
-            document.querySelectorAll('[data-calc]').forEach((button) => {
-                button.addEventListener('click', () => switchCalc(button.dataset.calc));
-            });
-
-            document.querySelectorAll('[data-calc-target]').forEach((input) => {
-                input.addEventListener('change', () => {
-                    if (input.checked) switchCalc(input.dataset.calcTarget);
-                });
-            });
-
+            function syncHidden() { if (el('form-customer')) el('form-customer').value = state.customer; if (el('form-calc-type')) el('form-calc-type').value = state.type === 'solar' ? 'Solar' : 'Wärmepumpe'; if (el('form-monthly-cost')) el('form-monthly-cost').value = state.monthly; if (el('form-savings')) el('form-savings').value = state.savings; if (el('form-co2')) el('form-co2').value = state.co2; }
+            function updateRange(prefix) { const slider = el(prefix + '-slider'); if (!slider) return; const min = Number(slider.min); const max = Number(slider.max); const value = Number(slider.value); const percentage = ((value - min) / (max - min)) * 100; if (el(prefix + '-fill')) el(prefix + '-fill').style.width = percentage + '%'; if (el(prefix + '-thumb')) el(prefix + '-thumb').style.left = percentage + '%'; if (el(prefix + '-monthly')) el(prefix + '-monthly').textContent = value; }
+            function calculateSolar() { const value = Number(el('solar-slider').value); const q = 1.03; const totalCost20Years = (value * 12) * ((Math.pow(q, 20) - 1) / (q - 1)); const savings = Math.round((totalCost20Years * 0.70) / 100) * 100; if (el('solar-savings')) el('solar-savings').textContent = eur.format(savings); updateRange('solar'); if (state.type === 'solar') { state.monthly = value; state.savings = savings; state.co2 = ''; syncHidden(); } }
+            function calculateWaerme() { const value = Number(el('waerme-slider').value); const q = 1.03; const totalCost20Years = (value * 12) * ((Math.pow(q, 20) - 1) / (q - 1)); const savings = Math.round((totalCost20Years * 0.35) / 100) * 100; const co2 = Math.round((value / 200) * 3 * 20); if (el('waerme-savings')) el('waerme-savings').textContent = eur.format(savings); if (el('waerme-co2')) el('waerme-co2').textContent = co2; updateRange('waerme'); if (state.type === 'waerme') { state.monthly = value; state.savings = savings; state.co2 = co2 + ' t'; syncHidden(); } }
+            function switchCalc(type) { state.type = type; const isSolar = type === 'solar'; el('pane-solar').hidden = !isSolar; el('pane-waerme').hidden = isSolar; el('tab-solar').classList.toggle('is-active', isSolar); el('tab-waerme').classList.toggle('is-active', !isSolar); el('tab-solar').setAttribute('aria-selected', String(isSolar)); el('tab-waerme').setAttribute('aria-selected', String(!isSolar)); if (isSolar) calculateSolar(); else calculateWaerme(); if (typeof lucide !== 'undefined') lucide.createIcons(); }
+            document.querySelectorAll('[data-customer]').forEach((button) => { button.addEventListener('click', () => { state.customer = button.dataset.customer; document.querySelectorAll('[data-customer]').forEach((b) => b.classList.remove('is-active')); button.classList.add('is-active'); syncHidden(); }); });
+            document.querySelectorAll('[data-calc]').forEach((button) => { button.addEventListener('click', () => switchCalc(button.dataset.calc)); });
+            document.querySelectorAll('[data-calc-target]').forEach((input) => { input.addEventListener('change', () => { if (input.checked) switchCalc(input.dataset.calcTarget); }); });
             if (el('solar-slider')) el('solar-slider').addEventListener('input', calculateSolar);
             if (el('waerme-slider')) el('waerme-slider').addEventListener('input', calculateWaerme);
-
-            calculateSolar();
-            calculateWaerme();
-            switchCalc('solar');
+            calculateSolar(); calculateWaerme(); switchCalc('solar');
         })();
     </script>
 </body>
