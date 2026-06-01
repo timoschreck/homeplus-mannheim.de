@@ -1,4 +1,22 @@
 (function () {
+    const legacyHosts = new Set(['homeplus.de', 'www.homeplus.de', 'www.homeplus-rn.de']);
+    const pageMap = {
+        '/': 'index.html',
+        '/index.html': 'index.html',
+        '/leistungen.html': 'leistungen.html',
+        '/photovoltaik.html': 'photovoltaik.html',
+        '/waermepumpen.html': 'waermepumpen.html',
+        '/ablauf.html': 'ablauf.html',
+        '/ueber-uns.html': 'ueber-uns.html',
+        '/kontakt.html': 'kontakt.html',
+        '/impressum.html': 'impressum.html',
+        '/datenschutz.html': 'datenschutz.html',
+        '/agb.html': 'agb.html',
+        '/cookie-richtlinie.html': 'cookie-richtlinie.html',
+        '/barrierefreiheit.html': 'barrierefreiheit.html',
+        '/mannheim-heidelberg.html': 'mannheim-heidelberg.html'
+    };
+
     const securityPolicy = [
         "default-src 'self'",
         "base-uri 'self'",
@@ -42,6 +60,33 @@
         el.dataset.homeplusSecurity = 'true';
     }
 
+    function mapLegacyUrl(value) {
+        if (!value) return value;
+        try {
+            const url = new URL(value, window.location.href);
+            if (!legacyHosts.has(url.hostname)) return value;
+            const page = pageMap[url.pathname] || 'index.html';
+            return (page === 'index.html' ? './' : './' + page) + url.search + url.hash;
+        } catch (e) {
+            return value;
+        }
+    }
+
+    function normalizeLegacyDomainLinks() {
+        document.querySelectorAll('a[href], area[href]').forEach(link => {
+            const current = link.getAttribute('href');
+            const next = mapLegacyUrl(current);
+            if (next === current) return;
+
+            link.setAttribute('href', next);
+            const visibleText = (link.textContent || '').trim();
+            if (/^https?:\/\/(www\.)?homeplus\.de\/?$/i.test(visibleText)) {
+                const targetUrl = new URL(next, window.location.origin + window.location.pathname);
+                link.textContent = targetUrl.href.replace(/index\.html$/, '');
+            }
+        });
+    }
+
     function secureInteractiveAttributes() {
         document.querySelectorAll('a[target="_blank"]').forEach(link => {
             const rel = new Set((link.getAttribute('rel') || '').split(/\s+/).filter(Boolean));
@@ -67,12 +112,17 @@
         upsertHttpEquivMeta('Content-Security-Policy', securityPolicy);
         upsertNamedMeta('referrer', 'strict-origin-when-cross-origin');
         secureInteractiveAttributes();
+        normalizeLegacyDomainLinks();
     }
 
     installSecurityAttributes();
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', secureInteractiveAttributes, { once: true });
+        document.addEventListener('DOMContentLoaded', () => {
+            secureInteractiveAttributes();
+            normalizeLegacyDomainLinks();
+        }, { once: true });
     } else {
         secureInteractiveAttributes();
+        normalizeLegacyDomainLinks();
     }
 })();
