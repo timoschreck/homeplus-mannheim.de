@@ -191,6 +191,25 @@
         document.head.appendChild(script);
     }
 
+    function polishRegionalLandingHeader() {
+        if (currentFile !== 'mannheim-heidelberg.html') return;
+        const header = document.getElementById('main-header');
+        if (header) {
+            header.classList.remove('bg-brand-blue', 'text-white');
+            header.classList.add('bg-white', 'text-brand-blue', 'border-b', 'border-gray-100');
+        }
+        const logo = document.querySelector('#main-header img');
+        if (logo) {
+            logo.setAttribute('src', './gruen_blau_schriftzug.webp');
+            logo.setAttribute('alt', 'HomePlus Mannheim Heidelberg');
+            logo.className = 'h-9 md:h-10 w-auto object-contain';
+        }
+        document.querySelectorAll('#main-header nav a:not(.bg-brand-disturbingOrange)').forEach(link => {
+            link.classList.remove('text-white');
+            link.classList.add('text-brand-blue');
+        });
+    }
+
     function ensureLocalSeoLink() {
         if (document.querySelector('a[href="mannheim-heidelberg.html"], a[href="./mannheim-heidelberg.html"]')) return;
         const footer = document.querySelector('footer');
@@ -232,12 +251,17 @@
         document.addEventListener('DOMContentLoaded', () => {
             normalizeLegacyLinks();
             ensureLocalSeoLink();
+            polishRegionalLandingHeader();
         });
     } else {
         normalizeLegacyLinks();
         ensureLocalSeoLink();
+        polishRegionalLandingHeader();
     }
-    window.addEventListener('load', installStaticContactFallback);
+    window.addEventListener('load', () => {
+        installStaticContactFallback();
+        polishRegionalLandingHeader();
+    });
 
     try {
         if (window.CookieConsent && CookieConsent.configuration && Array.isArray(CookieConsent.configuration.tags)) {
