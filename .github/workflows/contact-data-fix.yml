@@ -1,0 +1,78 @@
+name: One-time contact data fix
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix-contact-data:
+    if: contains(github.event.head_commit.message, 'Run contact data fixer')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Replace old phone and postcode
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          replacements = [
+              ('+49 15565 - 415 254', '+49 1565 - 415 254'),
+              ('+49 15565 415 254', '+49 1565 - 415 254'),
+              ('+49 15565 415254', '+49 1565 415254'),
+              ('15565 - 415 254', '+49 1565 - 415 254'),
+              ('15565 415 254', '+49 1565 - 415 254'),
+              ('4915565415254', '491565415254'),
+              ('68159', '68239'),
+          ]
+          text_suffixes = {'.html', '.htm', '.js', '.json', '.xml', '.txt', '.css', '.webmanifest', '.md'}
+          excluded = {
+              'configuration.js',
+              'security-hardening.js',
+              '.github/workflows/contact-data-fix.yml',
+          }
+          changed = []
+
+          for path in Path('.').rglob('*'):
+              if not path.is_file():
+                  continue
+              rel = path.as_posix().lstrip('./')
+              if rel in excluded or '.git/' in rel:
+                  continue
+              if path.suffix.lower() not in text_suffixes:
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+              new_text = text
+              for old, new in replacements:
+                  new_text = new_text.replace(old, new)
+              if new_text != text:
+                  path.write_text(new_text, encoding='utf-8')
+                  changed.append(rel)
+
+          workflow = Path('.github/workflows/contact-data-fix.yml')
+          if workflow.exists():
+              workflow.unlink()
+              changed.append(workflow.as_posix())
+
+          print('Changed files:')
+          for item in changed:
+              print('-', item)
+          PY
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Korrigiere Telefonnummer und PLZ [skip ci]"
+            git push
+          fi
