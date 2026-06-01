@@ -3,11 +3,11 @@
 HomePlus ist regionaler Ansprechpartner fuer Photovoltaik, Waermepumpen, Stromspeicher, Wallboxen und Elektroinstallation in Mannheim, Heidelberg und einem Umkreis von ca. 25 km.
 
 Wichtige Seiten:
-- https://timoschreck.github.io/homeplus-mannheim.de/
-- https://timoschreck.github.io/homeplus-mannheim.de/mannheim-heidelberg.html
-- https://timoschreck.github.io/homeplus-mannheim.de/photovoltaik.html
-- https://timoschreck.github.io/homeplus-mannheim.de/waermepumpen.html
-- https://timoschreck.github.io/homeplus-mannheim.de/kontakt.html
+- https://homeplus-rn.de/
+- https://homeplus-rn.de/mannheim-heidelberg.html
+- https://homeplus-rn.de/photovoltaik.html
+- https://homeplus-rn.de/waermepumpen.html
+- https://homeplus-rn.de/kontakt.html
 
 Regionale Suchintentionen:
 - Photovoltaik Mannheim
