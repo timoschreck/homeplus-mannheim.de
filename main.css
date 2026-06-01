@@ -188,36 +188,40 @@ input#strasse_hausnummer, .pac-target-input { background-image: none !important;
     html,
     body,
     .angebot-hero {
+        max-width: 100vw !important;
         overflow-x: hidden !important;
     }
 
     .angebot-shell {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+        width: calc(100vw - 2rem) !important;
+        max-width: calc(100vw - 2rem) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
     }
 
-    .angebot-title {
-        font-size: clamp(2rem, 10vw, 2.25rem) !important;
-        line-height: 1.08 !important;
-        max-width: 100% !important;
-        overflow-wrap: break-word !important;
-    }
-
-    .angebot-lead {
-        max-width: 100% !important;
-        font-size: 1rem !important;
-    }
-
+    .angebot-title,
+    .angebot-lead,
     .angebot-grid,
     .angebot-panel,
     .form-panel,
     .choice-row,
     .field-grid,
     .kontakt-mini {
+        width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
+    }
+
+    .angebot-title {
+        font-size: clamp(2rem, 9vw, 2.2rem) !important;
+        line-height: 1.08 !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .angebot-lead {
+        font-size: 1rem !important;
     }
 
     .chip-button,
