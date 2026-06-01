@@ -19,6 +19,62 @@
         '/mannheim-heidelberg.html': 'mannheim-heidelberg.html'
     };
 
+    const contactReplacements = [
+        [/\+49 15565 - 415 254/g, '+49 1565 - 415 254'],
+        [/\+49 15565 415 254/g, '+49 1565 - 415 254'],
+        [/\+49 15565 415254/g, '+49 1565 415254'],
+        [/15565 - 415 254/g, '+49 1565 - 415 254'],
+        [/15565 415 254/g, '+49 1565 - 415 254'],
+        [/4915565415254/g, '491565415254'],
+        [/68159/g, '68239']
+    ];
+
+    function applyContactCorrections(value) {
+        if (!value || !/(15565|4915565415254|68159)/.test(value)) return value;
+        return contactReplacements.reduce((next, pair) => next.replace(pair[0], pair[1]), value);
+    }
+
+    function correctContactDetails() {
+        if (document.head) {
+            document.head.querySelectorAll('meta[content], script[type="application/ld+json"]').forEach(el => {
+                const attr = el.getAttribute('content');
+                if (attr) {
+                    const next = applyContactCorrections(attr);
+                    if (next !== attr) el.setAttribute('content', next);
+                }
+                if (el.tagName === 'SCRIPT' && el.textContent) {
+                    const next = applyContactCorrections(el.textContent);
+                    if (next !== el.textContent) el.textContent = next;
+                }
+            });
+        }
+
+        document.querySelectorAll('a[href], input[placeholder], textarea[placeholder]').forEach(el => {
+            ['href', 'placeholder'].forEach(attrName => {
+                if (!el.hasAttribute(attrName)) return;
+                const current = el.getAttribute(attrName);
+                const next = applyContactCorrections(current);
+                if (next !== current) el.setAttribute(attrName, next);
+            });
+        });
+
+        if (!document.body || !window.NodeFilter) return;
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+                if (!node.nodeValue || !/(15565|4915565415254|68159)/.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+                const parent = node.parentElement;
+                if (parent && /^(SCRIPT|STYLE|NOSCRIPT|TEXTAREA)$/i.test(parent.tagName)) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        });
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(node => {
+            const next = applyContactCorrections(node.nodeValue);
+            if (next !== node.nodeValue) node.nodeValue = next;
+        });
+    }
+
     function loadSecurityHardening() {
         if (!document.head || document.querySelector('script[data-homeplus-security-loader]')) return;
         const script = document.createElement('script');
@@ -157,12 +213,13 @@
             url: siteBase,
             image: siteBase + 'Design_ohne_Titel-2.webp',
             logo: siteBase + 'HomePlus_Logo_horizontal_weiss-gruen-kein-rand.webp',
-            telephone: '+49 15565 415254',
+            telephone: '+49 1565 415254',
             priceRange: '€€',
             description: defaultDescription,
             address: {
                 '@type': 'PostalAddress',
                 addressLocality: 'Mannheim',
+                postalCode: '68239',
                 addressRegion: 'Baden-Wuerttemberg',
                 addressCountry: 'DE'
             },
@@ -258,21 +315,25 @@
 
     setSeoMetadata();
     installLocalBusinessSchema();
+    correctContactDetails();
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             normalizeLegacyLinks();
             ensureLocalSeoLink();
             polishRegionalLandingHeader();
+            correctContactDetails();
         });
     } else {
         normalizeLegacyLinks();
         ensureLocalSeoLink();
         polishRegionalLandingHeader();
+        correctContactDetails();
     }
     window.addEventListener('load', () => {
         installStaticContactFallback();
         polishRegionalLandingHeader();
+        correctContactDetails();
     });
 
     try {
