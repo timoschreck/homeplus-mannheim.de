@@ -1,6 +1,6 @@
 # HomePlus Mannheim Heidelberg
 
-HomePlus ist regionaler Ansprechpartner fuer Photovoltaik, Waermepumpen, Stromspeicher, Wallboxen und Elektroinstallation in Mannheim, Heidelberg und einem Umkreis von ca. 25 km.
+HomePlus ist regionaler Ansprechpartner fuer Photovoltaik, Waermepumpen, Stromspeicher, Wallboxen und Elektroinstallation in Mannheim, Heidelberg und dem Rhein-Neckar-Raum.
 
 Wichtige Seiten:
 - https://homeplus-rn.de/
@@ -15,4 +15,4 @@ Regionale Suchintentionen:
 - Waermepumpe Mannheim
 - Waermepumpe Heidelberg
 - Solaranlage Rhein-Neckar
-- Stromspeicher und Wallbox im 25 km Umkreis Mannheim
+- Stromspeicher und Wallbox im Rhein-Neckar-Raum
