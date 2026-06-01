@@ -19,6 +19,18 @@
         '/mannheim-heidelberg.html': 'mannheim-heidelberg.html'
     };
 
+    function loadSecurityHardening() {
+        if (!document.head || document.querySelector('script[data-homeplus-security-loader]')) return;
+        const script = document.createElement('script');
+        script.src = siteBase + 'security-hardening.js';
+        script.defer = false;
+        script.dataset.homeplusSecurityLoader = 'true';
+        script.setAttribute('data-cookieconsent', 'ignore');
+        document.head.appendChild(script);
+    }
+
+    loadSecurityHardening();
+
     const cityNames = [
         'Mannheim', 'Heidelberg', 'Ludwigshafen', 'Viernheim', 'Weinheim',
         'Schwetzingen', 'Ladenburg', 'Schriesheim', 'Leimen', 'Heddesheim',
