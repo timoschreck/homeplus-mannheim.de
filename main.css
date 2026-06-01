@@ -182,3 +182,69 @@ input#strasse_hausnummer, .pac-target-input { background-image: none !important;
     min-height: 480px;       
     padding-bottom: 2.5rem !important; 
 }
+
+/* Kontakt-Rechner: schmale Displays ohne horizontales Überlaufen */
+@media (max-width: 760px) {
+    html,
+    body,
+    .angebot-hero {
+        overflow-x: hidden !important;
+    }
+
+    .angebot-shell {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .angebot-title {
+        font-size: clamp(2rem, 10vw, 2.25rem) !important;
+        line-height: 1.08 !important;
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .angebot-lead {
+        max-width: 100% !important;
+        font-size: 1rem !important;
+    }
+
+    .angebot-grid,
+    .angebot-panel,
+    .form-panel,
+    .choice-row,
+    .field-grid,
+    .kontakt-mini {
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .chip-button,
+    .tab-button,
+    .interest-option span {
+        min-width: 0 !important;
+    }
+
+    .tab-button {
+        font-size: .62rem !important;
+        letter-spacing: .035em !important;
+    }
+
+    .calc-value {
+        font-size: 2.35rem !important;
+    }
+
+    .calc-unit {
+        font-size: .62rem !important;
+        letter-spacing: .04em !important;
+    }
+
+    .savings-value {
+        font-size: 2.2rem !important;
+    }
+
+    .interest-option span {
+        font-size: .64rem !important;
+    }
+}
