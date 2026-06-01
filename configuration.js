@@ -38,7 +38,7 @@
         'Oftersheim', 'Frankenthal', 'Speyer'
     ];
 
-    const defaultDescription = 'Photovoltaik, Waermepumpen, Stromspeicher und Wallboxen in Mannheim, Heidelberg und 25 km Umkreis. HomePlus plant und montiert alles aus einer Hand.';
+    const defaultDescription = 'Photovoltaik, Waermepumpen, Stromspeicher und Wallboxen in Mannheim, Heidelberg und dem Rhein-Neckar-Raum. HomePlus plant und montiert alles aus einer Hand.';
     const seoByPage = {
         'index.html': {
             title: 'Photovoltaik & Waermepumpe Mannheim Heidelberg | HomePlus',
@@ -47,7 +47,7 @@
         },
         'photovoltaik.html': {
             title: 'Photovoltaik Mannheim & Heidelberg | Solaranlage installieren',
-            description: 'Solaranlage in Mannheim, Heidelberg und 25 km Umkreis planen und installieren lassen. HomePlus liefert Photovoltaik, Speicher und Wallbox aus einer Hand.',
+            description: 'Solaranlage in Mannheim, Heidelberg und dem Rhein-Neckar-Raum planen und installieren lassen. HomePlus liefert Photovoltaik, Speicher und Wallbox aus einer Hand.',
             keywords: 'Photovoltaik Mannheim, Solaranlage Mannheim, Photovoltaik Heidelberg, Solaranlage Heidelberg, PV Anlage Rhein-Neckar, Stromspeicher Mannheim, Wallbox Heidelberg'
         },
         'waermepumpen.html': {
@@ -62,13 +62,13 @@
         },
         'kontakt.html': {
             title: 'Angebot Photovoltaik & Waermepumpe Mannheim Heidelberg',
-            description: 'Kostenloses Angebot fuer Photovoltaik, Waermepumpe, Speicher oder Wallbox in Mannheim, Heidelberg und 25 km Umkreis anfordern. HomePlus meldet sich persoenlich.',
+            description: 'Kostenloses Angebot fuer Photovoltaik, Waermepumpe, Speicher oder Wallbox in Mannheim, Heidelberg und dem Rhein-Neckar-Raum anfordern. HomePlus meldet sich persoenlich.',
             keywords: 'Photovoltaik Angebot Mannheim, Waermepumpe Angebot Heidelberg, Solaranlage Beratung Mannheim, HomePlus Kontakt Rhein-Neckar'
         },
         'mannheim-heidelberg.html': {
-            title: 'Photovoltaik & Waermepumpe Mannheim Heidelberg 25 km Umkreis',
-            description: 'Regionale Fachberatung fuer Photovoltaik, Waermepumpen, Speicher und Wallboxen in Mannheim, Heidelberg, Ludwigshafen, Viernheim und 25 km Umkreis.',
-            keywords: 'Photovoltaik Mannheim Heidelberg, Waermepumpe Mannheim Heidelberg, Solaranlage 25 km Mannheim, HomePlus Rhein-Neckar, Energieberatung Mannheim Heidelberg'
+            title: 'Photovoltaik & Waermepumpe Mannheim Heidelberg Rhein-Neckar-Raum',
+            description: 'Regionale Fachberatung fuer Photovoltaik, Waermepumpen, Speicher und Wallboxen in Mannheim, Heidelberg, Ludwigshafen, Viernheim und dem Rhein-Neckar-Raum.',
+            keywords: 'Photovoltaik Mannheim Heidelberg, Waermepumpe Mannheim Heidelberg, Solaranlage Rhein-Neckar, HomePlus Rhein-Neckar, Energieberatung Mannheim Heidelberg'
         }
     };
 
@@ -130,7 +130,7 @@
         setLink('manifest', siteBase + 'site.webmanifest');
         setMeta('meta[name="description"]', { name: 'description', content: seo.description });
         setMeta('meta[name="keywords"]', { name: 'keywords', content: seo.keywords });
-        setMeta('meta[name="coverage"]', { name: 'coverage', content: 'Mannheim, Heidelberg, Rhein-Neckar, 25 km Umkreis' });
+        setMeta('meta[name="coverage"]', { name: 'coverage', content: 'Mannheim, Heidelberg, Rhein-Neckar-Raum' });
         setMeta('meta[name="geo.region"]', { name: 'geo.region', content: 'DE-BW' });
         setMeta('meta[name="geo.placename"]', { name: 'geo.placename', content: 'Mannheim, Heidelberg' });
         setMeta('meta[name="geo.position"]', { name: 'geo.position', content: '49.48745;8.46604' });
@@ -192,7 +192,7 @@
                     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Photovoltaik Installation Mannheim Heidelberg' } },
                     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Waermepumpe Installation Mannheim Heidelberg' } },
                     { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Stromspeicher und Wallbox Rhein-Neckar' } },
-                    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Elektroinstallation im 25 km Umkreis Mannheim' } }
+                    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Elektroinstallation im Rhein-Neckar-Raum' } }
                 ]
             }
         };
