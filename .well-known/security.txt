@@ -1,0 +1,5 @@
+Contact: mailto:info@homeplus-rn.de
+Preferred-Languages: de, en
+Canonical: https://homeplus-rn.de/.well-known/security.txt
+Policy: https://homeplus-rn.de/datenschutz.html
+Expires: 2027-05-31T23:59:00Z
