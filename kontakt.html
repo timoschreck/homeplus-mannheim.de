@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kontakt | HomePlus Rhein‑Neckar</title>
-    <!-- Lade das zentrale Stylesheet für das Frontend -->
     <link rel="icon" type="image/png" href="./fav_icon.webp">
     <link rel="apple-touch-icon" href="./fav_icon.webp">
-    <!-- Verwende die gleiche CSS‑Datei wie die übrigen Seiten -->
+    <!-- Tailwind liefert die Utility-Klassen für Layout, Bildgrößen und Abstände. -->
+    <link rel="stylesheet" href="./tailwind.css">
     <link rel="stylesheet" href="./main.css">
     <!-- Setze das Manifest auf die korrekte Domain -->
     <link rel="manifest" href="https://www.homeplus-rn.de/site.webmanifest">
 </head>
-<body class="relative">
+<body class="relative text-brand-textBody bg-brand-light antialiased h-full">
 
     <!-- ========================================= -->
     <!-- Navigationsleiste (Aus Index übernommen)  -->
     <!-- ========================================= -->
-    <header class="bg-brand-blue text-white w-full z-50">
+    <header class="bg-brand-blue text-white w-full z-50" id="main-header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <!-- Logo -->
@@ -96,16 +96,6 @@
             const ch = document.getElementById('ratgeber-chevron');
             if (dd) { dd.classList.add('hidden'); ch.style.transform = ''; }
         });
-        // Mobile menu toggle
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if(mobileBtn){
-            mobileBtn.addEventListener('click', function(){
-                const expanded = mobileBtn.getAttribute('aria-expanded') === 'true';
-                mobileBtn.setAttribute('aria-expanded', !expanded);
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
     </script>
 
     <!-- ========================================== -->
@@ -126,7 +116,7 @@
                 <p class="text-brand-textBody"><strong>WhatsApp:</strong> <a href="https://wa.me/4915565415254" target="_blank" rel="noopener noreferrer" class="text-brand-primary hover:underline">+49&nbsp;15565&nbsp;415&nbsp;254</a></p>
             </div>
             <!-- Formular -->
-            <div>
+            <div id="anfrage">
                 <h2 class="text-2xl font-bold text-brand-blue mb-4">Kontaktformular</h2>
                 <form action="https://formspree.io/f/xdajyvbv" method="POST" class="space-y-4">
                     <div class="grid md:grid-cols-2 gap-4">
