@@ -444,7 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const businessSchema = {
             "@context": "https://schema.org",
             "@type": "EnergyBusiness",
-            "@id": "https://homeplus-rn.de/#organization",
+            "@id": "https://homeplus.de/#organization",
             "name": "HomePlus GmbH",
             "aggregateRating": {
                 "@type": "AggregateRating",
