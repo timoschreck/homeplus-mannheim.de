@@ -1,7 +1,7 @@
 (function () {
     const siteBase = window.location.origin + (window.location.pathname.includes('/homeplus-mannheim.de/') ? '/homeplus-mannheim.de/' : '/');
     const currentFile = window.location.pathname.split('/').pop() || 'index.html';
-    const legacyHosts = ['homeplus-rn.de', 'www.homeplus-rn.de'];
+    const legacyHosts = ['homeplus.de', 'www.homeplus.de', 'www.homeplus-rn.de'];
     const pageMap = {
         '/': 'index.html',
         '/index.html': 'index.html',
