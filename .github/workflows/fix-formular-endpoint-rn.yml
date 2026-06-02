@@ -1,0 +1,74 @@
+name: Fix formular endpoint Rhein-Neckar
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Route contact form to Rhein-Neckar endpoint
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          contact = Path('kontakt.html')
+          text = contact.read_text(encoding='utf-8')
+          text = text.replace(
+              'action="https://www.homeplus.de/kontakt.php"',
+              'action="https://formular.homeplus-rn.de/send-lead.php"'
+          )
+          text = text.replace(
+              'security-hardening.js?v=20260602-formbackend',
+              'security-hardening.js?v=20260602-formmail'
+          )
+          text = text.replace(
+              'security-hardening.js?v=20260602-formmail',
+              'security-hardening.js?v=20260602-formmail'
+          )
+          contact.write_text(text, encoding='utf-8')
+
+          sec = Path('security-hardening.js')
+          s = sec.read_text(encoding='utf-8')
+          s = s.replace(
+              '"form-action \'self\' https://www.homeplus.de https://homeplus.de"',
+              '"form-action \'self\' https://formular.homeplus-rn.de"'
+          )
+          sec.write_text(s, encoding='utf-8')
+
+          cfg = Path('configuration.js')
+          if cfg.exists():
+              c = cfg.read_text(encoding='utf-8')
+              c = c.replace(
+                  'security-hardening.js?v=20260602-formbackend',
+                  'security-hardening.js?v=20260602-formmail'
+              )
+              cfg.write_text(c, encoding='utf-8')
+
+          wf = Path('.github/workflows/fix-formular-endpoint-rn.yml')
+          if wf.exists():
+              wf.unlink()
+          PY
+
+          grep -q 'action="https://formular.homeplus-rn.de/send-lead.php"' kontakt.html
+          grep -q "form-action 'self' https://formular.homeplus-rn.de" security-hardening.js
+          ! grep -R "https://www.homeplus.de/kontakt.php\|form-action 'self' https://www.homeplus.de" kontakt.html security-hardening.js
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add kontakt.html security-hardening.js configuration.js .github/workflows/fix-formular-endpoint-rn.yml
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Route contact form to Rhein-Neckar mail endpoint"
+            git push
+          fi
