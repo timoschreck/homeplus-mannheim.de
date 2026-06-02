@@ -1,0 +1,55 @@
+name: Fix contact form backend
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-contact-form-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch contact form backend
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          contact = Path('kontakt.html')
+          text = contact.read_text(encoding='utf-8')
+          text = text.replace('action="https://formspree.io/f/xdajyvbv"', 'action="https://www.homeplus.de/kontakt.php"')
+          text = text.replace('<input type="hidden" name="_subject" value="Neue Anfrage über HomePlus Rhein-Neckar Rechner">', '<input type="hidden" name="action" value="send_lead">')
+          text = text.replace('<input type="tel" id="telefon" name="Telefon" placeholder="+49 1565 - 415 254">', '<input type="tel" id="telefon" name="Telefon" placeholder="+49 1565 - 415 254" required>')
+          contact.write_text(text, encoding='utf-8')
+
+          security = Path('security-hardening.js')
+          policy = security.read_text(encoding='utf-8')
+          policy = policy.replace('"form-action \'self\' https://formspree.io"', '"form-action \'self\' https://www.homeplus.de https://homeplus.de"')
+          policy = policy.replace('"connect-src \'self\' https://formspree.io https://consent.cookiebot.com https://maps.googleapis.com https://maps.gstatic.com"', '"connect-src \'self\' https://consent.cookiebot.com https://maps.googleapis.com https://maps.gstatic.com"')
+          security.write_text(policy, encoding='utf-8')
+
+          workflow = Path('.github/workflows/contact-form-backend-fix.yml')
+          if workflow.exists():
+              workflow.unlink()
+          PY
+
+          test -z "$(grep -R "formspree.io" kontakt.html security-hardening.js || true)"
+          grep -q 'action="https://www.homeplus.de/kontakt.php"' kontakt.html
+          grep -q 'name="action" value="send_lead"' kontakt.html
+          grep -q "form-action 'self' https://www.homeplus.de https://homeplus.de" security-hardening.js
+      - name: Commit correction
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add kontakt.html security-hardening.js .github/workflows/contact-form-backend-fix.yml
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Fix contact form backend"
+            git push
+          fi
