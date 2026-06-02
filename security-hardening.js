@@ -21,7 +21,7 @@
         "default-src 'self'",
         "base-uri 'self'",
         "object-src 'none'",
-        "form-action 'self' https://www.homeplus.de https://homeplus.de",
+        "form-action 'self' https://formular.homeplus-rn.de",
         "img-src 'self' data: https:",
         "font-src 'self' data: https:",
         "style-src 'self' 'unsafe-inline' https:",
