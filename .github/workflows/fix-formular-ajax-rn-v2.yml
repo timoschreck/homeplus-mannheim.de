@@ -1,0 +1,103 @@
+name: Fix AJAX formular endpoint Rhein-Neckar v2
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Send contact form AJAX to Rhein-Neckar endpoint
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          main = Path('main.js')
+          text = main.read_text(encoding='utf-8')
+          old = (
+              "            fetch('/kontakt.html', {\n"
+              "                method: 'POST',\n"
+              "                body: formData\n"
+              "            })\n"
+              "            .then(response => response.json())\n"
+          )
+          new = (
+              "            const endpoint = form.getAttribute('action') || '/kontakt.html';\n"
+              "\n"
+              "            fetch(endpoint, {\n"
+              "                method: 'POST',\n"
+              "                body: formData,\n"
+              "                mode: /^https?:\\/\\//i.test(endpoint) ? 'cors' : 'same-origin'\n"
+              "            })\n"
+              "            .then(response => {\n"
+              "                const type = response.headers.get('content-type') || '';\n"
+              "                if (type.includes('application/json')) return response.json();\n"
+              "                if (response.ok) return { status: 'success' };\n"
+              "                throw new Error('Server returned an error status.');\n"
+              "            })\n"
+          )
+          if old in text:
+              text = text.replace(old, new)
+          elif "fetch(endpoint" not in text:
+              raise SystemExit('AJAX fetch block not found')
+          text = text.replace(
+              'Ihre Anfrage wurde erfolgreich an unser System übergeben. Unser Team meldet sich in Kürze bei Ihnen.',
+              'Ihre Anfrage wurde erfolgreich gesendet. Unser Team meldet sich in Kürze bei Ihnen.'
+          )
+          main.write_text(text, encoding='utf-8')
+
+          sec = Path('security-hardening.js')
+          s = sec.read_text(encoding='utf-8')
+          s = s.replace(
+              "connect-src 'self' https://consent.cookiebot.com https://maps.googleapis.com https://maps.gstatic.com",
+              "connect-src 'self' https://formular.homeplus-rn.de https://consent.cookiebot.com https://maps.googleapis.com https://maps.gstatic.com"
+          )
+          sec.write_text(s, encoding='utf-8')
+
+          contact = Path('kontakt.html')
+          c = contact.read_text(encoding='utf-8')
+          c = c.replace('security-hardening.js?v=20260602-formmail', 'security-hardening.js?v=20260602-formajax')
+          c = c.replace('src="./main.js"></script>', 'src="./main.js?v=20260602-formajax"></script>')
+          c = c.replace('src="main.js"></script>', 'src="main.js?v=20260602-formajax"></script>')
+          c = c.replace('src="./main.js?v=20260602-formbackend"></script>', 'src="./main.js?v=20260602-formajax"></script>')
+          c = c.replace('src="main.js?v=20260602-formbackend"></script>', 'src="main.js?v=20260602-formajax"></script>')
+          c = c.replace('src="./main.js?v=20260602-formmail"></script>', 'src="./main.js?v=20260602-formajax"></script>')
+          c = c.replace('src="main.js?v=20260602-formmail"></script>', 'src="main.js?v=20260602-formajax"></script>')
+          contact.write_text(c, encoding='utf-8')
+
+          cfg = Path('configuration.js')
+          if cfg.exists():
+              cfg_text = cfg.read_text(encoding='utf-8')
+              cfg_text = cfg_text.replace('security-hardening.js?v=20260602-formmail', 'security-hardening.js?v=20260602-formajax')
+              cfg.write_text(cfg_text, encoding='utf-8')
+
+          for name in ['fix-formular-ajax-rn.yml', 'fix-formular-ajax-rn-v2.yml']:
+              wf = Path('.github/workflows') / name
+              if wf.exists():
+                  wf.unlink()
+          PY
+
+          grep -q "const endpoint = form.getAttribute('action')" main.js
+          grep -q "fetch(endpoint" main.js
+          grep -q "connect-src 'self' https://formular.homeplus-rn.de" security-hardening.js
+          grep -q "security-hardening.js?v=20260602-formajax" kontakt.html
+          grep -q "main.js?v=20260602-formajax" kontakt.html
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add main.js security-hardening.js kontakt.html configuration.js .github/workflows/fix-formular-ajax-rn.yml .github/workflows/fix-formular-ajax-rn-v2.yml
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Send AJAX contact form to Rhein-Neckar endpoint"
+            git push
+          fi
