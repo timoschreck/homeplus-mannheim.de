@@ -26,7 +26,7 @@
         "font-src 'self' data: https:",
         "style-src 'self' 'unsafe-inline' https:",
         "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://consent.cookiebot.com https://maps.googleapis.com https://maps.gstatic.com https://unpkg.com https://cdn.tailwindcss.com",
-        "connect-src 'self' https://consent.cookiebot.com https://maps.googleapis.com https://maps.gstatic.com",
+        "connect-src 'self' https://formular.homeplus-rn.de https://consent.cookiebot.com https://maps.googleapis.com https://maps.gstatic.com",
         "frame-src 'self' https://consent.cookiebot.com https://www.google.com",
         "media-src 'self'",
         "manifest-src 'self' https://www.homeplus-rn.de",

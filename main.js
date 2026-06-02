@@ -277,11 +277,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const oldAlerts = form.querySelectorAll('.ajax-alert');
             oldAlerts.forEach(a => a.remove());
 
-            fetch('/kontakt.html', {
+            const endpoint = form.getAttribute('action') || '/kontakt.html';
+
+            fetch(endpoint, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                mode: /^https?:\/\//i.test(endpoint) ? 'cors' : 'same-origin'
             })
-            .then(response => response.json())
+            .then(response => {
+                const type = response.headers.get('content-type') || '';
+                if (type.includes('application/json')) return response.json();
+                if (response.ok) return { status: 'success' };
+                throw new Error('Server returned an error status.');
+            })
             .then(data => {
                 if (data.status === 'success') {
                     const successHtml = `
@@ -290,7 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <i data-lucide="check" class="w-10 h-10"></i>
                             </div>
                             <p class="font-heading font-extrabold text-2xl md:text-3xl uppercase tracking-wide mb-3 text-brand-blue">Vielen Dank!</p>
-                            <p class="text-lg font-light text-brand-textBody max-w-md">Ihre Anfrage wurde erfolgreich an unser System übergeben. Unser Team meldet sich in Kürze bei Ihnen.</p>
+                            <p class="text-lg font-light text-brand-textBody max-w-md">Ihre Anfrage wurde erfolgreich gesendet. Unser Team meldet sich in Kürze bei Ihnen.</p>
                         </div>
                     `;
                     form.style.transition = 'opacity 0.4s ease';
