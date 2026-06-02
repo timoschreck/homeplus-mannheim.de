@@ -165,8 +165,8 @@
                     <div class="angebot-badge" aria-hidden="true"><small>Angebot in</small><span>2 Min.</span><small>anfordern</small></div>
                     <h2 class="form-title">Kostenloses Angebot anfordern</h2>
                     <p class="form-copy">Teilen Sie uns kurz mit, worum es geht. Ihre Rechnerwerte werden automatisch mitgesendet, damit wir schneller und genauer reagieren können.</p>
-                    <form action="https://formspree.io/f/xdajyvbv" method="POST" id="main-lead-form">
-                        <input type="hidden" name="_subject" value="Neue Anfrage über HomePlus Rhein-Neckar Rechner">
+                    <form action="https://www.homeplus.de/kontakt.php" method="POST" id="main-lead-form">
+                        <input type="hidden" name="action" value="send_lead">
                         <input type="text" name="website" tabindex="-1" autocomplete="off" style="display:none">
                         <input type="hidden" name="Kundentyp" id="form-customer" value="Hauseigentümer">
                         <input type="hidden" name="Rechner_Typ" id="form-calc-type" value="Solar">
@@ -188,7 +188,7 @@
                             <div class="field"><label for="plz">PLZ</label><input type="text" id="plz" name="PLZ" placeholder="68239" inputmode="numeric" required></div>
                             <div class="field"><label for="ort">Ort</label><input type="text" id="ort" name="Ort" placeholder="Mannheim" required></div>
                             <div class="field"><label for="email">E-Mail</label><input type="email" id="email" name="E-Mail" placeholder="name@example.de" required></div>
-                            <div class="field"><label for="telefon">Telefon</label><input type="tel" id="telefon" name="Telefon" placeholder="+49 1565 - 415 254"></div>
+                            <div class="field"><label for="telefon">Telefon</label><input type="tel" id="telefon" name="Telefon" placeholder="+49 1565 - 415 254" required></div>
                             <div class="field full"><label for="nachricht">Nachricht</label><textarea id="nachricht" name="Nachricht" placeholder="Was ist Ihnen wichtig? Dach, Verbrauch, Heizung oder gewünschter Zeitraum?"></textarea></div>
                         </div>
                         <label class="consent" for="datenschutz"><input type="checkbox" id="datenschutz" name="Datenschutz akzeptiert" value="Ja" required><span>Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Details stehen in der Datenschutzerklärung.</span></label>
