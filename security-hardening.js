@@ -164,12 +164,152 @@
         });
     }
 
+    function getCurrentPageName() {
+        const path = window.location.pathname || '/';
+        if (path === '/' || path.endsWith('/')) return 'index.html';
+        return path.split('/').pop() || 'index.html';
+    }
+
+    function normalizeTrackingValue(value) {
+        return (value || '').toString().replace(/\s+/g, ' ').trim().slice(0, 120);
+    }
+
+    function getElementLabel(el) {
+        return normalizeTrackingValue(
+            el.getAttribute('data-track-label') ||
+            el.getAttribute('aria-label') ||
+            el.getAttribute('title') ||
+            el.textContent ||
+            el.value ||
+            ''
+        );
+    }
+
+    function getPlacement(el) {
+        if (el.getAttribute('data-track-placement')) return el.getAttribute('data-track-placement');
+        const section = el.closest('header, footer, nav, main, section, aside');
+        if (!section) return 'unknown';
+        if (section.id) return section.id;
+        if (section.tagName) return section.tagName.toLowerCase();
+        return 'unknown';
+    }
+
+    function getServiceAndCity() {
+        const page = getCurrentPageName().toLowerCase();
+        const service = page.includes('waermepumpe') || page.includes('waermepumpen')
+            ? 'waermepumpe'
+            : (page.includes('photovoltaik') ? 'photovoltaik' : '');
+        const city = page.includes('heidelberg') ? 'heidelberg' : (page.includes('mannheim') ? 'mannheim' : '');
+        return { service, city };
+    }
+
+    function dispatchTrackingEvent(eventName, params) {
+        const payload = Object.assign({
+            page: getCurrentPageName(),
+            path: window.location.pathname
+        }, params || {});
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, payload));
+
+        if (typeof window.plausible === 'function') {
+            window.plausible(eventName, { props: payload });
+        }
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', eventName, payload);
+        }
+        if (Array.isArray(window._paq)) {
+            window._paq.push(['trackEvent', 'lead', eventName, payload.label || payload.placement || payload.page]);
+        }
+
+        window.dispatchEvent(new CustomEvent('homeplus:track', {
+            detail: { event: eventName, params: payload }
+        }));
+    }
+
+    function installLeadTracking() {
+        if (window.HomePlusTracking && window.HomePlusTracking.installed) return;
+
+        const startedForms = new WeakSet();
+        window.HomePlusTracking = {
+            installed: true,
+            track: dispatchTrackingEvent
+        };
+
+        document.addEventListener('click', event => {
+            const target = event.target.closest('a[href], button[data-track-event]');
+            if (!target) return;
+
+            const href = target.getAttribute('href') || '';
+            const explicitEvent = target.getAttribute('data-track-event');
+            const common = Object.assign(getServiceAndCity(), {
+                placement: getPlacement(target),
+                label: getElementLabel(target)
+            });
+
+            if (explicitEvent) {
+                dispatchTrackingEvent(explicitEvent, common);
+                return;
+            }
+
+            if (/^tel:/i.test(href)) {
+                dispatchTrackingEvent('click_tel', Object.assign(common, {
+                    phone_number: href.replace(/^tel:/i, '')
+                }));
+                return;
+            }
+
+            if (/^mailto:/i.test(href)) {
+                dispatchTrackingEvent('click_mail', Object.assign(common, {
+                    email: href.replace(/^mailto:/i, '').split('?')[0]
+                }));
+                return;
+            }
+
+            if (/(wa\.me|whatsapp\.com|api\.whatsapp\.com)/i.test(href)) {
+                dispatchTrackingEvent('click_whatsapp', common);
+                return;
+            }
+
+            if (/kontakt\.html|#kontakt/i.test(href) && /angebot|anfrage|beratung|kontakt|foerder|förder/i.test(common.label + ' ' + href)) {
+                dispatchTrackingEvent('project_page_cta_click', common);
+            }
+        }, true);
+
+        document.addEventListener('focusin', event => {
+            const field = event.target.closest('input, select, textarea');
+            if (!field) return;
+            const form = field.closest('form');
+            if (!form || startedForms.has(form)) return;
+            startedForms.add(form);
+            dispatchTrackingEvent('form_start', {
+                page: getCurrentPageName(),
+                form_name: normalizeTrackingValue(form.getAttribute('data-track-form') || form.getAttribute('name') || form.id || 'contact_form')
+            });
+        }, true);
+
+        document.addEventListener('submit', event => {
+            const form = event.target;
+            if (!form || !form.matches || !form.matches('form')) return;
+            const formName = normalizeTrackingValue(form.getAttribute('data-track-form') || form.getAttribute('name') || form.id || 'contact_form');
+            const common = Object.assign(getServiceAndCity(), {
+                page: getCurrentPageName(),
+                form_name: formName
+            });
+            dispatchTrackingEvent('form_submit', common);
+            if (/kontakt|contact|angebot|anfrage|quote/i.test(formName + ' ' + (form.getAttribute('action') || ''))) {
+                dispatchTrackingEvent('quote_request', common);
+            }
+        }, true);
+    }
+
     function installSecurityAttributes() {
         upsertHttpEquivMeta('Content-Security-Policy', securityPolicy);
         upsertNamedMeta('referrer', 'strict-origin-when-cross-origin');
         secureInteractiveAttributes();
         normalizeLegacyDomainLinks();
         correctContactDetails();
+        installLeadTracking();
     }
 
     installSecurityAttributes();
@@ -178,11 +318,13 @@
             secureInteractiveAttributes();
             normalizeLegacyDomainLinks();
             correctContactDetails();
+            installLeadTracking();
         }, { once: true });
     } else {
         secureInteractiveAttributes();
         normalizeLegacyDomainLinks();
         correctContactDetails();
+        installLeadTracking();
     }
     window.addEventListener('load', correctContactDetails);
 })();
