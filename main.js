@@ -439,58 +439,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const reviewCards = document.querySelectorAll('#reviews-slider .shrink-0, #bewertungen .bg-white.rounded-\\[2\\.5rem\\]');
-    if (reviewCards.length > 0) {
-        let ratingValue = '4.9';
-        let reviewCount = '166'; 
-        
-        const ratingMatch = document.body.innerText.match(/(\d[\.,]\d)\/5\s*(auf\s*Google)?/i);
-        if (ratingMatch && ratingMatch[1]) {
-            ratingValue = ratingMatch[1].replace(',', '.');
-        }
-
-        const businessSchema = {
-            "@context": "https://schema.org",
-            "@type": "EnergyBusiness",
-            "@id": "https://homeplus-rn.de/#organization",
-            "name": "HomePlus GmbH",
-            "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": ratingValue,
-                "bestRating": "5",
-                "ratingCount": reviewCount
-            },
-            "review": []
-        };
-
-        reviewCards.forEach(card => {
-            const textEl = card.querySelector('p.line-clamp-6, p.line-clamp-4');
-            const authorEl = card.querySelector('p.font-bold.text-sm, p.font-bold.text-base');
-            
-            if (textEl && authorEl) {
-                businessSchema.review.push({
-                    "@type": "Review",
-                    "author": {
-                        "@type": "Person",
-                        "name": authorEl.innerText.trim()
-                    },
-                    "reviewRating": {
-                        "@type": "Rating",
-                        "ratingValue": "5",
-                        "bestRating": "5"
-                    },
-                    "reviewBody": textEl.innerText.replace(/"/g, '').trim()
-                });
-            }
-        });
-
-        if (businessSchema.review.length > 0) {
-            const script = document.createElement('script');
-            script.type = 'application/ld+json';
-            script.textContent = JSON.stringify(businessSchema);
-            document.head.appendChild(script);
-        }
-    }
+    // Bewertungen bleiben sichtbar, werden aber nicht als Review-Snippet-Markup
+    // ausgezeichnet. Google wertet selbst verwaltete LocalBusiness-Bewertungen
+    // nicht fuer Review-Sterne und meldet sonst strukturierte-Daten-Probleme.
 
 });
 
